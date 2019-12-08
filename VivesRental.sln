@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivesRental.Model", "VivesRental.Model\VivesRental.Model.csproj", "{C5FAF568-2155-4F05-9F3D-4D7430C4AD4F}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivesRental.Services.Tests", "VivesRental.Services.Tests\VivesRental.Services.Tests.csproj", "{4AA784B3-D7B0-4FC3-A9F2-220035EDD867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivesRental.Tests.Data", "VivesRental.Tests.Data\VivesRental.Tests.Data.csproj", "{E4E1A2A7-A327-4783-969E-48A1247C46AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{5BB2CBC8-FB83-4A5B-8D5F-1A47399711C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivesRental.GUI", "VivesRental.GUI\VivesRental.GUI.csproj", "{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{E4E1A2A7-A327-4783-969E-48A1247C46AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4E1A2A7-A327-4783-969E-48A1247C46AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4E1A2A7-A327-4783-969E-48A1247C46AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +77,9 @@ Global
 		{46F00E1E-E135-4F39-81EA-70F57584ED5F} = {DD08DF89-E606-4E8B-AFB0-BE85F6EC2D35}
 		{4AA784B3-D7B0-4FC3-A9F2-220035EDD867} = {DD08DF89-E606-4E8B-AFB0-BE85F6EC2D35}
 		{E4E1A2A7-A327-4783-969E-48A1247C46AA} = {DD08DF89-E606-4E8B-AFB0-BE85F6EC2D35}
+		{96C6D34B-22A5-478E-A1BA-FC0D9FFFF7F0} = {5BB2CBC8-FB83-4A5B-8D5F-1A47399711C0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50F99351-6FFC-449B-9725-F1EABF0426F8}
 	EndGlobalSection
 EndGlobal
