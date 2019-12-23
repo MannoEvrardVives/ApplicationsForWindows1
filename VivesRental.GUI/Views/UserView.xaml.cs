@@ -18,7 +18,7 @@ namespace VivesRental.GUI.Views
     /// <summary>
     /// Interaction logic for UserView.xaml
     /// </summary>
-    public partial class UserView : Page
+    public partial class UserView : UserControl
     {
         public UserView()
         {

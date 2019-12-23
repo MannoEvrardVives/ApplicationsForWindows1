@@ -7,11 +7,12 @@
     d1p1:Ignorable="d" 
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:VivesRental.GUI.ViewModels"
-
-    >
-    <!-- xmlns:views="clr-namespace:VivesRental.GUI.Views" -->
+    xmlns:views="clr-namespace:VivesRental.GUI.Views">
     <Application.Resources>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+      <DataTemplate DataType="{x:Type vm:UserViewModel}">
+          <views:UserView />
+      </DataTemplate>
     </Application.Resources>
 </Application>
 
