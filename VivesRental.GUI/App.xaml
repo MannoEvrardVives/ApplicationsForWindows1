@@ -10,7 +10,7 @@
     xmlns:views="clr-namespace:VivesRental.GUI.Views">
     <Application.Resources>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-      <DataTemplate DataType="{x:Type vm:UserViewModel}">
+        <DataTemplate DataType="{x:Type vm:UserViewModel}">
           <views:UserView />
       </DataTemplate>
     </Application.Resources>

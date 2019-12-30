@@ -15,9 +15,9 @@ namespace VivesRental.GUI.Models
 
         private int id;
         private string firstName = "Manno";
-        private string name;
-        private string email;
-        private string phoneNumber;
+        private string name = "Evrard";
+        private string email = "manno.evrard@gmail.com";
+        private string phoneNumber = "+32471178519";
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace VivesRental.GUI.Models
 
         public int Id
         {
-            get { return id; }
+            get => id;
             private set
             {
                 id = value;
@@ -34,7 +34,7 @@ namespace VivesRental.GUI.Models
         }
         public string FirstName
         {
-            get { return firstName; }
+            get => firstName;
             set
             {
                 firstName = value;
@@ -43,7 +43,7 @@ namespace VivesRental.GUI.Models
         }
         public string Name
         {
-            get { return name; }
+            get => name;
             set
             {
                 name = value;
@@ -52,7 +52,7 @@ namespace VivesRental.GUI.Models
         }
         public string Email
         {
-            get { return email; }
+            get => email;
             set
             {
                 email = value;
@@ -61,7 +61,7 @@ namespace VivesRental.GUI.Models
         }
         public string PhoneNumber
         {
-            get { return phoneNumber; }
+            get => phoneNumber;
             set
             {
                 phoneNumber = value;
