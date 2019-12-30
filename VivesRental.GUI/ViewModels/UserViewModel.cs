@@ -14,7 +14,15 @@ namespace VivesRental.GUI.ViewModels
         private User user = new User();
 
         public ICommand CreateUserCommand { get; private set; }
-
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                RaisePropertyChanged("User");
+            }
+        }
 
         public UserViewModel()
         {
@@ -24,16 +32,6 @@ namespace VivesRental.GUI.ViewModels
         private void InstantiateCommands()
         {
             CreateUserCommand = new RelayCommand(CreateUser);
-        }
-
-        public User User
-        {
-            get => user;
-            set
-            {
-                user = value;
-                RaisePropertyChanged("User");
-            }
         }
 
         public void CreateUser()

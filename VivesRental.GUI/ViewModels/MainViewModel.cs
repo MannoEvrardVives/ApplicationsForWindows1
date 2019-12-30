@@ -14,9 +14,11 @@ namespace VivesRental.GUI.ViewModels
 
         #region Properties
 
+        readonly static UserViewModel _userViewModel = new UserViewModel();
+        readonly static DashboardViewModel _dashboardViewModel = new DashboardViewModel();
+
         public ICommand UserViewCommand { get; private set; }
         public ICommand CloseCommand { get; private set; }
-        readonly static UserViewModel _userViewModel = new UserViewModel();
 
         public ViewModelBase CurrentViewModel
         {
@@ -37,7 +39,7 @@ namespace VivesRental.GUI.ViewModels
 
         public MainViewModel()
         {
-            CurrentViewModel = MainViewModel._userViewModel;
+            CurrentViewModel = MainViewModel._dashboardViewModel;
             InstantiateCommands();
         }
 
