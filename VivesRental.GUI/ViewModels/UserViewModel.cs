@@ -38,7 +38,6 @@ namespace VivesRental.GUI.ViewModels
 
         public void CreateUser()
         {
-            Debug.WriteLine("Clicked button");
             UserService service = new UserService();
             Model.User createdUser = service.Create(user);
 
