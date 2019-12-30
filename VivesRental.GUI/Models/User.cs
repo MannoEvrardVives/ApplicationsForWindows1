@@ -14,7 +14,7 @@ namespace VivesRental.GUI.Models
         #region Members
 
         private int id;
-        private string firstName;
+        private string firstName = "Manno";
         private string name;
         private string email;
         private string phoneNumber;
@@ -26,6 +26,11 @@ namespace VivesRental.GUI.Models
         public int Id
         {
             get { return id; }
+            private set
+            {
+                id = value;
+                OnPropertyChanged();
+            }
         }
         public string FirstName
         {

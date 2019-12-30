@@ -3,3 +3,8 @@
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.csprojAssemblyReference.cache
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.dll
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.pdb
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Model\bin\Debug\VivesRental.Model.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Model\bin\Debug\VivesRental.Model.pdb
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.csprojAssemblyReference.cache
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Model\obj\Debug\VivesRental.Model.pdb

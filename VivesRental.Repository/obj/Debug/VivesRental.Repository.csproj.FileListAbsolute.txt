@@ -11,3 +11,16 @@
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.csproj.CopyComplete
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.dll
 \\Mac\Home\Documents\School\Bachelor Toegepast Informatica\Vives\3de Jaar\Applications for windows 1\Opdrachten\20180515 VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.pdb
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\VivesRental.Repository.dll.config
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\VivesRental.Repository.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\VivesRental.Repository.pdb
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\EntityFramework.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\EntityFramework.SqlServer.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\VivesRental.Model.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\VivesRental.Model.pdb
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\EntityFramework.xml
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\bin\Debug\EntityFramework.SqlServer.xml
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.csprojAssemblyReference.cache
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.csproj.CopyComplete
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.dll
+\\Mac\Home\Desktop\20180515_VivesRental\VivesRental.Repository\obj\Debug\VivesRental.Repository.pdb

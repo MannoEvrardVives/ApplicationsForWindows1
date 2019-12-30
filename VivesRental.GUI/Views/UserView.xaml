@@ -3,12 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VivesRental.GUI.Views"
+             xmlns:models="clr-namespace:VivesRental.GUI.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel>
-            <TextBox x:Name="TextBox" Text="dit is een test"/>
-        </StackPanel>
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    <Grid Margin="30">
+        <Grid.Resources>
+            <models:User x:Key="User"/>
+        </Grid.Resources>
+        <Grid.DataContext>
+            <Binding Source="{StaticResource User}"/>
+        </Grid.DataContext>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" >Firstname:</Label>
+        <TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
+        <Label Grid.Row="1">Name:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
+        <Label Grid.Row="2">E-mail:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
+        <Label Grid.Row="3">Phone number:</Label>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
     </Grid>
 </UserControl>
