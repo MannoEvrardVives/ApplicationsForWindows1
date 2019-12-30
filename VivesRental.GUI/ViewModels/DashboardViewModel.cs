@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using VivesRental.GUI.Contracts;
+using VivesRental.GUI.Messages;
 
 namespace VivesRental.GUI.ViewModels
 {
-    class DashboardViewModel : ViewModelBase
+    class DashboardViewModel : ViewModelBase, IViewModel
     {
 
         public ICommand OpenUsersManagementCommand { get; private set; }
@@ -30,7 +33,7 @@ namespace VivesRental.GUI.ViewModels
 
         private void OpenUsersManagement()
         {
-
+            OpenModelView(new UserViewModel());
         }
         private void OpenItemsManagement()
         {
@@ -39,6 +42,12 @@ namespace VivesRental.GUI.ViewModels
         private void OpenRentalManagement()
         {
 
+        }
+
+        private void OpenModelView(IViewModel viewModel)
+        {
+            var message = new NavigationMessage { ViewModel = viewModel };
+            Messenger.Default.Send(message);
         }
     }
 }

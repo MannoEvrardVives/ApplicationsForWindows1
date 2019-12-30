@@ -3,13 +3,15 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using VivesRental.GUI.Contracts;
+using VivesRental.GUI.Messages;
 
 namespace VivesRental.GUI.ViewModels
 {
 
     public class MainViewModel : ViewModelBase
     {
-        private ViewModelBase _currentViewModel;
+        private IViewModel _currentViewModel;
 
 
         #region Properties
@@ -21,12 +23,9 @@ namespace VivesRental.GUI.ViewModels
         public ICommand UserViewCommand { get; private set; }
         public ICommand CloseCommand { get; private set; }
 
-        public ViewModelBase CurrentViewModel
+        public IViewModel CurrentViewModel
         {
-            get
-            {
-                return _currentViewModel;
-            }
+            get => _currentViewModel;
             set
             {
                 if (_currentViewModel == value)
@@ -42,8 +41,13 @@ namespace VivesRental.GUI.ViewModels
         {
             CurrentViewModel = MainViewModel._dashboardViewModel;
             InstantiateCommands();
+            InitializeMessenger();
         }
 
+        private void InitializeMessenger()
+        {
+            Messenger.Default.Register<NavigationMessage>(this, NavigateToViewModel);
+        }
         private void InstantiateCommands()
         {
             DashboardViewCommand = new RelayCommand(ExecuteDashboardViewCommand);
@@ -59,9 +63,13 @@ namespace VivesRental.GUI.ViewModels
             ShowViewModel(_userViewModel);
         }
 
-        private void ShowViewModel(ViewModelBase viewModel)
+        private void ShowViewModel(IViewModel viewModel)
         {
             CurrentViewModel = viewModel;
+        }
+        private void NavigateToViewModel(NavigationMessage message)
+        {
+            CurrentViewModel = message.ViewModel;
         }
 
         private void ExecuteCloseCommand()

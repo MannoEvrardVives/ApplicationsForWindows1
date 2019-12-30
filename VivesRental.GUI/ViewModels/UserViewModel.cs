@@ -5,11 +5,12 @@ using VivesRental.Services;
 using System.Diagnostics;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using VivesRental.GUI.Contracts;
 
 
 namespace VivesRental.GUI.ViewModels
 {
-    class UserViewModel : ViewModelBase
+    class UserViewModel : ViewModelBase, IViewModel
     {
         private User user = new User();
 
@@ -34,10 +35,10 @@ namespace VivesRental.GUI.ViewModels
             CreateUserCommand = new RelayCommand(CreateUser);
         }
 
-        public void CreateUser()
+        private void CreateUser()
         {
-            UserService service = new UserService();
-            Model.User createdUser = service.Create(user);
+            var service = new UserService();
+            var createdUser = service.Create(user);
 
             if (createdUser == null)
             {

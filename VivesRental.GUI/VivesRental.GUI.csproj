@@ -70,6 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contracts\IViewModel.cs" />
+    <Compile Include="Messages\NavigationMessage.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -139,5 +141,6 @@
       <Name>VivesRental.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
