@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace VivesRental.GUI.Models
 {
-    class User : INotifyPropertyChanged
+    class User : VivesRental.Model.User, INotifyPropertyChanged
     {
 
         #region Members
 
         private int id;
-        private string firstName = "Manno";
-        private string name = "Evrard";
-        private string email = "manno.evrard@gmail.com";
-        private string phoneNumber = "+32471178519";
+        private string firstName;
+        private string name;
+        private string email;
+        private string phoneNumber;
 
         #endregion
 

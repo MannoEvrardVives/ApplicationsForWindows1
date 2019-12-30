@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using VivesRental.GUI.Models;
+using VivesRental.Services;
 using System.Diagnostics;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
+
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -13,20 +13,40 @@ namespace VivesRental.GUI.ViewModels
     {
         private User user = new User();
 
-       
+        public ICommand CreateUserCommand { get; private set; }
+
+
+        public UserViewModel()
+        {
+            InstantiateCommands();
+        }
+
+        private void InstantiateCommands()
+        {
+            CreateUserCommand = new RelayCommand(CreateUser);
+        }
 
         public User User
         {
-            get
-            {
-                Debug.WriteLine("user: "+user.FirstName);
-                return user;
-            }
+            get => user;
             set
             {
                 user = value;
                 RaisePropertyChanged("User");
             }
+        }
+
+        public void CreateUser()
+        {
+            Debug.WriteLine("Clicked button");
+            UserService service = new UserService();
+            Model.User createdUser = service.Create(user);
+
+            if (createdUser == null)
+            {
+                Debug.WriteLine("Whoops, something went wrong");
+            }
+            else Debug.WriteLine("Created user: " + createdUser);
         }
 	}
 }

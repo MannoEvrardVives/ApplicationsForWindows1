@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" >Firstname:</Label>
         <TextBox Text="{Binding User.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
@@ -25,5 +26,6 @@
         <TextBox Text="{Binding User.Email}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="3">Phone number:</Label>
         <TextBox Text="{Binding User.PhoneNumber}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
+        <Button Content="Save" Command="{Binding CreateUserCommand}"  Grid.Row="4"/>
     </Grid>
 </UserControl>
