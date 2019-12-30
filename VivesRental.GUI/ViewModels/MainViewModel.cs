@@ -1,34 +1,65 @@
+using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace VivesRental.GUI.ViewModels
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        private ViewModelBase _currentViewModel;
+
+
+        #region Properties
+
+        public ICommand UserViewCommand { get; private set; }
+        public ICommand CloseCommand { get; private set; }
+        readonly static UserViewModel _userViewModel = new UserViewModel();
+
+        public ViewModelBase CurrentViewModel
+        {
+            get
+            {
+                return _currentViewModel;
+            }
+            set
+            {
+                if (_currentViewModel == value)
+                    return;
+                _currentViewModel = value;
+                RaisePropertyChanged("CurrentViewModel");
+            }
+        }
+
+        #endregion
+
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            CurrentViewModel = MainViewModel._userViewModel;
+            InstantiateCommands();
         }
+
+        private void InstantiateCommands()
+        {
+            UserViewCommand = new RelayCommand(ExecuteUserViewCommand);
+            CloseCommand = new RelayCommand(ExecuteCloseCommand);
+        }
+        private void ExecuteUserViewCommand()
+        {
+            ShowViewModel(_userViewModel);
+        }
+
+        private void ShowViewModel(ViewModelBase viewModel)
+        {
+            CurrentViewModel = viewModel;
+        }
+
+        private void ExecuteCloseCommand()
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }
