@@ -15,9 +15,11 @@ namespace VivesRental.GUI.ViewModels
     class DashboardViewModel : ViewModelBase, IViewModel
     {
 
-        public ICommand OpenUsersManagementCommand { get; private set; }
-        public ICommand OpenItemsManagementCommand { get; private set; }
-        public ICommand OpenRentalManagementCommand { get; private set; }
+        public ICommand OpenUsersManagementViewCommand { get; private set; }
+        public ICommand OpenItemsManagementViewCommand { get; private set; }
+        public ICommand OpenRentalManagementViewCommand { get; private set; }
+        public ICommand OpenNewRentalViewCommand { get; private set; }
+        public ICommand OpenReturnRentalViewCommand { get; private set; }
 
         public DashboardViewModel()
         {
@@ -26,25 +28,35 @@ namespace VivesRental.GUI.ViewModels
 
         private void InstantiateCommands()
         {
-            OpenUsersManagementCommand = new RelayCommand(OpenUsersManagement);
-            OpenItemsManagementCommand = new RelayCommand(OpenItemsManagement);
-            OpenRentalManagementCommand = new RelayCommand(OpenRentalManagement);
+            OpenUsersManagementViewCommand = new RelayCommand(OpenUsersManagementView);
+            OpenItemsManagementViewCommand = new RelayCommand(OpenItemsManagementView);
+            OpenRentalManagementViewCommand = new RelayCommand(OpenRentalManagementView);
+            OpenNewRentalViewCommand = new RelayCommand(OpenNewRentalView);
+            OpenReturnRentalViewCommand = new RelayCommand(OpenReturnRentalView);
         }
 
-        private void OpenUsersManagement()
+        private void OpenUsersManagementView()
         {
-            OpenModelView(new UserViewModel());
+            OpenView(new UserViewModel());
         }
-        private void OpenItemsManagement()
-        {
-
-        }
-        private void OpenRentalManagement()
+        private void OpenItemsManagementView()
         {
 
         }
+        private void OpenRentalManagementView()
+        {
 
-        private void OpenModelView(IViewModel viewModel)
+        }
+        private void OpenNewRentalView()
+        {
+
+        }
+        private void OpenReturnRentalView()
+        {
+
+        }
+
+        private void OpenView(IViewModel viewModel)
         {
             var message = new NavigationMessage { ViewModel = viewModel };
             Messenger.Default.Send(message);
