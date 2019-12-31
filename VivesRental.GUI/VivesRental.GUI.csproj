@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Contracts\IViewModel.cs" />
     <Compile Include="Messages\NavigationMessage.cs" />
+    <Compile Include="Models\RentalItem.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
