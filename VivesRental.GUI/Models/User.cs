@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VivesRental.GUI.Models
 {
-    class User : VivesRental.Model.User, INotifyPropertyChanged
+    class User : Model.User, INotifyPropertyChanged
     {
 
         #region Members

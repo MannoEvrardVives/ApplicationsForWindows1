@@ -49,7 +49,7 @@ namespace VivesRental.GUI.ViewModels
         }
         private void OpenNewRentalView()
         {
-
+            OpenView(new NewRentalViewModel());
         }
         private void OpenReturnRentalView()
         {

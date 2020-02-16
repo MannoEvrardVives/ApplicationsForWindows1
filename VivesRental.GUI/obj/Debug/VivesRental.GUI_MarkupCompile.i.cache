@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 \\Mac\Home\Desktop\20180515_VivesRental\VivesRental.GUI\App.xaml
-3-2100120117
+4-1396139992
 
-15127147008
+20855616819
 124216058858
-MainWindow.xaml;Views\DashboardView.xaml;Views\UserView.xaml;
+MainWindow.xaml;Views\DashboardView.xaml;Views\NewRentalView.xaml;Views\UserView.xaml;
 
 False
 
