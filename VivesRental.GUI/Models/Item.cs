@@ -1,27 +1,19 @@
 ﻿using System.Collections.Generic;
+using VivesRental.Model;
 
-namespace VivesRental.Model
+namespace VivesRental.GUI.Models
 {
-    public class Item
+    public class Item : Model.Item
     {
-        public Item(int id = 0)
+        public Item(Model.Item item)
         {
-
-            // temp 
-
-            Id = id;
-            Name = "test";
-            Description = "test";
-
-
-
+            Id = item.Id;
+            Name = item.Name;
+            Description = item.Description;
+            Manufacturer = item.Manufacturer;
+            Publisher = item.Publisher;
+            RentalExpiresAfterDays = item.RentalExpiresAfterDays;
             RentalItems = new List<RentalItem>();
-
-            //temp
-            for (var i = 1; i <= 10; i++)
-            {
-                RentalItems.Add(new RentalItem());
-            }
         }
 
         public int Id { get; private set; }

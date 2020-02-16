@@ -11,6 +11,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
+using VivesRental.GUI.Models;
 using VivesRental.Model;
 
 namespace VivesRental.GUI.ViewModels
@@ -19,7 +20,7 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private List<Model.Item> items = new List<Model.Item>();
-        private ObservableCollection<Model.RentalItem> rentalItems = new ObservableCollection<Model.RentalItem>();
+        private ObservableCollection<Models.Item> rentedItems = new ObservableCollection<Models.Item>();
 
         public ICommand AddRentalOrderCommand { get; private set; }
         public ICommand AddItemToRentCommand { get; private set; }
@@ -32,13 +33,13 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("Items");
             }
         }
-        public ObservableCollection<Model.RentalItem> RentalItems
+        public ObservableCollection<Models.Item> RentedItems
         {
-            get => rentalItems;
+            get => rentedItems;
             private set
             {
-                rentalItems = value;
-                RaisePropertyChanged("RentalItems");
+                rentedItems = value;
+                RaisePropertyChanged("RentedItems");
             }
         }
 
@@ -49,7 +50,7 @@ namespace VivesRental.GUI.ViewModels
             //temp
             for (var i = 1; i <= 10; i++)
             {
-                items.Add(new Item());
+                items.Add(new Model.Item(i));
             }
         }
 
@@ -60,11 +61,37 @@ namespace VivesRental.GUI.ViewModels
         }
 
 
-        private void AddItemToRent(Model.Item item)
+        private void AddItemToRent(Model.Item chosenItem)
         {
-            rentalItems.Add(new Models.RentalItem(item));
-            Debug.WriteLine("rental items: "+rentalItems.Count);
+
+            if (chosenItem.RentalItems.Count == 0)
+            {
+                // show message saying there are no rentalItems available
+                Debug.WriteLine("No items to be rented");
+                return;
+            }
+
+            foreach (var item in rentedItems)
+            {
+                if (item.Id.Equals(chosenItem.Id))
+                {
+                    Models.Item itemCopy = new Models.Item(chosenItem)
+                    {
+                        RentalItems = item.RentalItems
+                    };
+                    itemCopy.RentalItems.Add(chosenItem.RentalItems.Last());
+                    rentedItems.Add(itemCopy);
+                    rentedItems.Remove(item);
+                    return;
+                }
+                    
+            }
+
+            Models.Item newItem = new Models.Item(chosenItem);
+            newItem.RentalItems.Add(chosenItem.RentalItems.Last());
+            rentedItems.Add(newItem);
         }
+
         private void AddRentalOrder()
         {
 

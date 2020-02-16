@@ -34,13 +34,13 @@
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding RentalItems}" Margin="10" Name="RentalItemsListView">
+        <ListView Grid.Column="1" ItemsSource="{Binding RentedItems}" Margin="10" Name="RentedItemsListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Amount"></GridViewColumn>
-                    <GridViewColumn Header="id" DisplayMemberBinding="{Binding Item.Id}"></GridViewColumn>
-                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Item.Name}"></GridViewColumn>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Item.Description}"></GridViewColumn>
+                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding RentalItems.Count}"></GridViewColumn>
+                    <GridViewColumn Header="id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding .Name}"></GridViewColumn>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
