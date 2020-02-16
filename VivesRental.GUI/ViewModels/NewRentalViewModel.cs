@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Models;
 using VivesRental.Model;
+using RentalOrder = VivesRental.GUI.Models.RentalOrder;
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -66,7 +67,7 @@ namespace VivesRental.GUI.ViewModels
 
             if (chosenItem.RentalItems.Count == 0)
             {
-                // show message saying there are no rentalItems available
+                //TODO: show message saying there are no rentalItems available
                 Debug.WriteLine("No items to be rented");
                 return;
             }
@@ -94,7 +95,14 @@ namespace VivesRental.GUI.ViewModels
 
         private void AddRentalOrder()
         {
-
+            if (rentedItems.Count == 0)
+            {
+                //TODO: show message saying there are no items selected
+                Debug.WriteLine("No items to be rented");
+                return;
+            }
+            RentalOrder order = new RentalOrder(0, rentedItems);
+            //TODO: do something with new order
         }
 
 
