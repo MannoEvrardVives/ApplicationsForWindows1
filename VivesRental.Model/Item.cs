@@ -10,15 +10,15 @@ namespace VivesRental.Model
             // temp 
 
             Id = id;
-            Name = "test";
-            Description = "test";
+            Name = "name van item";
+            Description = "description van item";
 
 
 
             RentalItems = new List<RentalItem>();
 
             //temp
-            for (var i = 1; i <= 10; i++)
+            for (var i = 1; i <= 2; i++)
             {
                 RentalItems.Add(new RentalItem());
             }

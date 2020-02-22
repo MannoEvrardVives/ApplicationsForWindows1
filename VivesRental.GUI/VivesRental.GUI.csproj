@@ -73,16 +73,25 @@
     <Compile Include="Contracts\IViewModel.cs" />
     <Compile Include="Messages\NavigationMessage.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\RentalItem.cs" />
     <Compile Include="Models\RentalOrder.cs" />
     <Compile Include="Models\RentalOrderLine.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\ItemsManagementViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NewItemViewModel.cs" />
     <Compile Include="ViewModels\NewRentalViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemsManagementView.xaml.cs">
+      <DependentUpon>ItemsManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewItemView.xaml.cs">
+      <DependentUpon>NewItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewRentalView.xaml.cs">
       <DependentUpon>NewRentalView.xaml</DependentUpon>
@@ -103,6 +112,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemsManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,6 +20,9 @@
             <MenuItem Header="Users">
                 <MenuItem Header="New" Command="{Binding UserViewCommand}"/>
             </MenuItem>
+            <MenuItem Header="Items">
+                <MenuItem Header="New" Command="{Binding NewItemViewCommand}"/>
+            </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
     </Grid>

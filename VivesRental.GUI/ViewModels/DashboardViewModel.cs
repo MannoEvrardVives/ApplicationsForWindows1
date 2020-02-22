@@ -41,7 +41,7 @@ namespace VivesRental.GUI.ViewModels
         }
         private void OpenItemsManagementView()
         {
-
+            OpenView(new ItemsManagementViewModel());
         }
         private void OpenRentalManagementView()
         {

@@ -18,9 +18,11 @@ namespace VivesRental.GUI.ViewModels
 
         readonly static UserViewModel _userViewModel = new UserViewModel();
         readonly static DashboardViewModel _dashboardViewModel = new DashboardViewModel();
+        readonly static NewItemViewModel _newItemViewModel = new NewItemViewModel();
 
         public ICommand DashboardViewCommand { get; private set; }
         public ICommand UserViewCommand { get; private set; }
+        public ICommand NewItemViewCommand { get; private set; }
         public ICommand CloseCommand { get; private set; }
 
         public IViewModel CurrentViewModel
@@ -52,6 +54,7 @@ namespace VivesRental.GUI.ViewModels
         {
             DashboardViewCommand = new RelayCommand(ExecuteDashboardViewCommand);
             UserViewCommand = new RelayCommand(ExecuteUserViewCommand);
+            NewItemViewCommand = new RelayCommand(ExecuteNewItemViewCommand);
             CloseCommand = new RelayCommand(ExecuteCloseCommand);
         }
         private void ExecuteDashboardViewCommand()
@@ -61,6 +64,10 @@ namespace VivesRental.GUI.ViewModels
         private void ExecuteUserViewCommand()
         {
             ShowViewModel(_userViewModel);
+        }
+        private void ExecuteNewItemViewCommand()
+        {
+            ShowViewModel(_newItemViewModel);
         }
 
         private void ShowViewModel(IViewModel viewModel)
