@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Models;
 using VivesRental.Model;
+using VivesRental.Services;
 using RentalOrder = VivesRental.GUI.Models.RentalOrder;
 
 namespace VivesRental.GUI.ViewModels

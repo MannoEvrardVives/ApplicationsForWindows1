@@ -28,6 +28,10 @@ namespace VivesRental.GUI.ViewModels
         public UserViewModel()
         {
             InstantiateCommands();
+            User.FirstName = "Manno";
+            User.Email = "email";
+            User.Name = "Evrard";
+            User.PhoneNumber = "phone";
         }
 
         private void InstantiateCommands()
@@ -38,7 +42,7 @@ namespace VivesRental.GUI.ViewModels
         private void CreateUser()
         {
             var service = new UserService();
-            var createdUser = service.Create(user);
+            var createdUser = service.Create(User);
 
             if (createdUser == null)
             {

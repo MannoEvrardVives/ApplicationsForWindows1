@@ -16,6 +16,11 @@ namespace VivesRental.GUI.Models
             RentalItems = new List<RentalItem>();
         }
 
+        public Item()
+        {
+            RentalItems = new List<RentalItem>();
+        }
+
         public int Id { get; private set; }
         public string Name { get; set; }
         public string Description { get; set; }
