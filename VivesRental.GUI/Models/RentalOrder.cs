@@ -15,7 +15,7 @@ namespace VivesRental.GUI.Models
                 foreach (var rentalItem in item.RentalItems)
                 {
                     
-                    RentalOrderLines.Add(new RentalOrderLine(rentalItem, item.Name, item.Description));
+                    RentalOrderLines.Add(new RentalOrderLine((Models.RentalItem)rentalItem, item.Name, item.Description));
                 }
             }
         }

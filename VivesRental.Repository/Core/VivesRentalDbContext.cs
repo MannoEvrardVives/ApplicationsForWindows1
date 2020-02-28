@@ -12,6 +12,11 @@ namespace VivesRental.Repository.Core
         public DbSet<RentalOrderLine> RentalOrderLines { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public VivesRentalDbContext(string connectionString) : base(connectionString)
+        {
+
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //Makes sure nothing gets initialized. We do this ourselves

@@ -19,6 +19,12 @@
       <DataTemplate DataType="{x:Type vm:NewRentalViewModel}">
           <views:NewRentalView />
       </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:ItemsManagementViewModel}">
+          <views:ItemsManagementView />
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vm:NewItemViewModel}">
+          <views:NewItemView />
+      </DataTemplate>
     </Application.Resources>
 </Application>
 

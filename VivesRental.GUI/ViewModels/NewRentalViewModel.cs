@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,10 @@ using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Models;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
+using VivesRental.Services;
+using Item = VivesRental.Model.Item;
+using RentalItem = VivesRental.Model.RentalItem;
 using RentalOrder = VivesRental.GUI.Models.RentalOrder;
 
 namespace VivesRental.GUI.ViewModels
@@ -21,7 +26,8 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private List<Model.Item> items = new List<Model.Item>();
-        private ObservableCollection<Models.Item> rentedItems = new ObservableCollection<Models.Item>();
+        private ObservableCollection<Model.Item> rentedItems = new ObservableCollection<Model.Item>();
+        private int userId = 0;
 
         public ICommand AddRentalOrderCommand { get; private set; }
         public ICommand AddItemToRentCommand { get; private set; }
@@ -34,7 +40,7 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("Items");
             }
         }
-        public ObservableCollection<Models.Item> RentedItems
+        public ObservableCollection<Model.Item> RentedItems
         {
             get => rentedItems;
             private set
@@ -43,16 +49,26 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("RentedItems");
             }
         }
+        public int UserId
+        {
+            get => userId;
+            set
+            {
+                userId = value;
+                RaisePropertyChanged("UserId");
+            }
+        }
 
         public NewRentalViewModel()
         {
             InstantiateCommands();
 
-            //temp
-            for (var i = 1; i <= 10; i++)
+            var service = new ItemService();
+            var include = new ItemIncludes
             {
-                items.Add(new Model.Item(i));
-            }
+                RentalItems = true
+            };
+            Items = (List<Model.Item>)service.All(include);
         }
 
         private void InstantiateCommands()
@@ -76,20 +92,44 @@ namespace VivesRental.GUI.ViewModels
             {
                 if (item.Id.Equals(chosenItem.Id))
                 {
-                    Models.Item itemCopy = new Models.Item(chosenItem)
+                    if (item.RentalItems.Count < chosenItem.RentalItems.Count)
                     {
-                        RentalItems = item.RentalItems
-                    };
-                    itemCopy.RentalItems.Add(chosenItem.RentalItems.Last());
-                    rentedItems.Add(itemCopy);
-                    rentedItems.Remove(item);
+
+                        Item updateItem = new Item
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Description = item.Description,
+                            Manufacturer = item.Manufacturer,
+                            Publisher = item.Publisher,
+                            RentalExpiresAfterDays = item.RentalExpiresAfterDays,
+                            RentalItems = item.RentalItems
+                        };
+
+                        updateItem.RentalItems.Add(chosenItem.RentalItems[updateItem.RentalItems.Count]);
+                        rentedItems.Remove(item);
+                        rentedItems.Add(updateItem);
+
+                    }
+                    else
+                    {
+                        Debug.WriteLine("No items to be rented anymore, out of stock");
+                    }
                     return;
                 }
                     
             }
 
-            Models.Item newItem = new Models.Item(chosenItem);
-            newItem.RentalItems.Add(chosenItem.RentalItems.Last());
+            var newItem = new Item
+            {
+                Id = chosenItem.Id,
+                Name = chosenItem.Name,
+                Description = chosenItem.Description,
+                Manufacturer = chosenItem.Manufacturer,
+                Publisher = chosenItem.Publisher,
+                RentalExpiresAfterDays = chosenItem.RentalExpiresAfterDays
+            };
+            newItem.RentalItems.Add(chosenItem.RentalItems.First());
             rentedItems.Add(newItem);
         }
 
@@ -101,8 +141,24 @@ namespace VivesRental.GUI.ViewModels
                 Debug.WriteLine("No items to be rented");
                 return;
             }
-            RentalOrder order = new RentalOrder(0, rentedItems);
-            //TODO: do something with new order
+
+            var service = new RentalOrderService();
+            var rentalOrder = service.Create(UserId);
+
+            if (rentalOrder != null)
+            {
+                var rentalOrderLineService = new RentalOrderLineService();
+                foreach (var rentedItem in RentedItems)
+                {
+                    foreach (var rentalItem in rentedItem.RentalItems)
+                    {
+                        rentalOrderLineService.Rent(rentalOrder.Id, rentalItem.Id);
+                    }
+                }
+            }
+            else Debug.WriteLine("Whoops, something went wrong");
+
+
         }
 
 

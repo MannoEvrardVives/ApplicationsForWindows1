@@ -16,6 +16,11 @@ namespace VivesRental.GUI.Models
             RentalItems = new List<RentalItem>();
         }
 
+        public Item()
+        {
+            RentalItems = new List<RentalItem>();
+        }
+
         public int Id { get; private set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,6 +28,6 @@ namespace VivesRental.GUI.Models
         public string Publisher { get; set; }
         public int RentalExpiresAfterDays { get; set; }
 
-        public IList<RentalItem> RentalItems { get; set; }
+        private IList<RentalItem> RentalItems { get; set; }
     }
 }

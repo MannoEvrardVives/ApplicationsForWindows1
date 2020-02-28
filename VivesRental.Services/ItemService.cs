@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Repository.Includes;
@@ -49,6 +50,7 @@ namespace VivesRental.Services
 
 		public Item Create(Item entity)
         {
+
             using (var unitOfWork = unitOfWorkFactory.CreateInstance())
             {
                 if (!entity.IsValid())

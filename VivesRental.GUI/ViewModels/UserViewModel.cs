@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
+using VivesRental.Model;
 
 
 namespace VivesRental.GUI.ViewModels
@@ -38,7 +39,7 @@ namespace VivesRental.GUI.ViewModels
         private void CreateUser()
         {
             var service = new UserService();
-            var createdUser = service.Create(user);
+            var createdUser = service.Create(User);
 
             if (createdUser == null)
             {

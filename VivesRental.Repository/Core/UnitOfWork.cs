@@ -8,7 +8,8 @@ namespace VivesRental.Repository.Core
 
         public UnitOfWork()
         {
-            _context = new VivesRentalDbContext();
+            string connectionString = "server=MANNOBC96\\SQLEXPRESS;database=VivesRental;trusted_connection=true;";
+            _context = new VivesRentalDbContext(connectionString);
             Items = new ItemRepository(_context);
             RentalItems = new RentalItemRepository(_context);
             RentalOrders = new RentalOrderRepository(_context);
