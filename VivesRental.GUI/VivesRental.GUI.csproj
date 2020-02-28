@@ -86,7 +86,6 @@
     <Compile Include="Models\RentalItem.cs" />
     <Compile Include="Models\RentalOrder.cs" />
     <Compile Include="Models\RentalOrderLine.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Services\ToastService.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ItemsManagementViewModel.cs" />

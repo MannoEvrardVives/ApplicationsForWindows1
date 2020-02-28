@@ -20,15 +20,15 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" >Name:</Label>
-        <TextBox Text="{Binding Item.Name}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Text="{Binding Item.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="1">Description:</Label>
-        <TextBox Text="{Binding Item.Description}" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Text="{Binding Item.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="2">Manufacturer:</Label>
-        <TextBox Text="{Binding Item.Manufacturer}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Text="{Binding Item.Manufacturer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="3">Publisher:</Label>
-        <TextBox Text="{Binding Item.Publisher}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Text="{Binding Item.Publisher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="4">Rental Expires After Days:</Label>
-        <TextBox Text="{Binding Item.RentalExpiresAfterDays}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Text="{Binding Item.RentalExpiresAfterDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" />
         <Button Content="Save" Command="{Binding CreateItemCommand}"  Grid.Row="5"/>
     </Grid>
 </UserControl>

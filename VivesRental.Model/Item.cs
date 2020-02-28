@@ -6,22 +6,7 @@ namespace VivesRental.Model
     {
         public Item(int id = 0)
         {
-
-            // temp 
-
-            Id = id;
-            Name = "name van item";
-            Description = "description van item";
-
-
-
             RentalItems = new List<RentalItem>();
-
-            //temp
-            for (var i = 1; i <= 2; i++)
-            {
-                RentalItems.Add(new RentalItem());
-            }
         }
 
         public int Id { get; private set; }

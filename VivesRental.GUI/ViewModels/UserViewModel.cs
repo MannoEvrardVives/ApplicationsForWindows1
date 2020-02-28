@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
+using VivesRental.Model;
 
 
 namespace VivesRental.GUI.ViewModels
@@ -28,10 +29,6 @@ namespace VivesRental.GUI.ViewModels
         public UserViewModel()
         {
             InstantiateCommands();
-            User.FirstName = "Manno";
-            User.Email = "email";
-            User.Name = "Evrard";
-            User.PhoneNumber = "phone";
         }
 
         private void InstantiateCommands()

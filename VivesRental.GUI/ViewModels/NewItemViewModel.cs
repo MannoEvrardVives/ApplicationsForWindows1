@@ -16,16 +16,16 @@ namespace VivesRental.GUI.ViewModels
     class NewItemViewModel : ViewModelBase, IViewModel
     {
 
-        private Item item = new Item();
+        private Model.Item item = new Model.Item();
 
         public ICommand CreateItemCommand { get; private set; }
-        public Item Item
+        public Model.Item Item
         {
             get => item;
             set
             {
                 item = value;
-                RaisePropertyChanged("Item");
+                RaisePropertyChanged();
             }
         }
 

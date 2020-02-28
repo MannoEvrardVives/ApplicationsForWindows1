@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using VivesRental.Model;
 
 namespace VivesRental.Services.Extensions
@@ -7,8 +8,12 @@ namespace VivesRental.Services.Extensions
     {
         public static bool IsValid(this Item item)
         {
+
             if (string.IsNullOrWhiteSpace(item.Name))
+            {
                 return false;
+            }
+               
 
             return true;
         }
