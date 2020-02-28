@@ -39,12 +39,12 @@
                 <GridView>
                     <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding RentalItems.Count}"></GridViewColumn>
                     <GridViewColumn Header="id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
-                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding .Name}"></GridViewColumn>
+                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <TextBox Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5" />
         <Button Content="Save rental order" Command="{Binding AddRentalOrderCommand}" Grid.Row="1" Grid.Column="1" Margin="10" />
     </Grid>
 </UserControl>
