@@ -4,6 +4,13 @@ namespace VivesRental.Model
 {
     public class RentalItem
     {
+        public RentalItem(Item item)
+        {
+            ItemId = item.Id;
+            Status = RentalItemStatus.Normal;
+            RentalOrderLines = new List<RentalOrderLine>();
+        }
+
         public RentalItem()
         {
             RentalOrderLines = new List<RentalOrderLine>();

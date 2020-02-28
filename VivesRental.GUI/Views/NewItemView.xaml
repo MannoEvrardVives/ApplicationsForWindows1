@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" >Name:</Label>
         <TextBox Text="{Binding Item.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
@@ -29,6 +30,8 @@
         <TextBox Text="{Binding Item.Publisher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="4">Rental Expires After Days:</Label>
         <TextBox Text="{Binding Item.RentalExpiresAfterDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" />
-        <Button Content="Save" Command="{Binding CreateItemCommand}"  Grid.Row="5"/>
+        <Label Grid.Row="5">Number of rental items:</Label>
+        <TextBox Text="{Binding NumberOfRentalItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Margin="0,5,0,5" />
+        <Button Content="Save" Command="{Binding CreateItemCommand}"  Grid.Row="6"/>
     </Grid>
 </UserControl>

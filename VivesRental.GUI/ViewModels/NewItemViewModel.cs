@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Models;
+using VivesRental.Model;
 using VivesRental.Services;
 
 namespace VivesRental.GUI.ViewModels
@@ -17,6 +18,7 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private Model.Item item = new Model.Item();
+        private int numberOfRentalItems = 0;
 
         public ICommand CreateItemCommand { get; private set; }
         public Model.Item Item
@@ -25,6 +27,15 @@ namespace VivesRental.GUI.ViewModels
             set
             {
                 item = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int NumberOfRentalItems
+        {
+            get => numberOfRentalItems;
+            set
+            {
+                numberOfRentalItems = value;
                 RaisePropertyChanged();
             }
         }
@@ -41,6 +52,7 @@ namespace VivesRental.GUI.ViewModels
 
         private void CreateItem()
         {
+
             var service = new ItemService();
             var createdItem = service.Create(Item);
 
@@ -48,7 +60,16 @@ namespace VivesRental.GUI.ViewModels
             {
                 Debug.WriteLine("Whoops, something went wrong");
             }
-            else Debug.WriteLine("Created item: " + createdItem);
+            else
+            {
+                var rentalItemService = new RentalItemService();
+
+                for (var i = 0; i < numberOfRentalItems; i++)
+                {
+                    rentalItemService.Create(new Model.RentalItem(createdItem));
+                }
+                Debug.WriteLine("Created item");
+            }
         }
 
     }

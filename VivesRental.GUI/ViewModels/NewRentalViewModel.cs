@@ -52,7 +52,7 @@ namespace VivesRental.GUI.ViewModels
             //temp
             for (var i = 1; i <= 10; i++)
             {
-                items.Add(new Model.Item(i));
+                //items.Add(new Model.Item(i));
             }
         }
 

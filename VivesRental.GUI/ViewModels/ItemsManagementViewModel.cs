@@ -9,6 +9,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
+using VivesRental.Services;
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -35,12 +37,12 @@ namespace VivesRental.GUI.ViewModels
 
         public ItemsManagementViewModel()
         {
-           //temp
-            for (var i = 1; i <= 10; i++)
+            var service = new ItemService();
+            var include = new ItemIncludes
             {
-                Model.Item tempItem = new Model.Item(i);
-                items.Add(tempItem);
-            }
+                RentalItems = true
+            };
+            Items = (List<Model.Item>)service.All(include);
 
         }
 

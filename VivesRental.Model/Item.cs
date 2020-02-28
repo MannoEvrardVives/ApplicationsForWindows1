@@ -4,7 +4,7 @@ namespace VivesRental.Model
 {
     public class Item
     {
-        public Item(int id = 0)
+        public Item()
         {
             RentalItems = new List<RentalItem>();
         }
