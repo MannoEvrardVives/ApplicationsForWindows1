@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace VivesRental.GUI.Views
 {
     /// <summary>
-    /// Interaction logic for ItemsManagementView.xaml
+    /// Interaction logic for RentalOrdersView.xaml
     /// </summary>
-    public partial class ItemsManagementView : UserControl
+    public partial class RentalOrdersView : UserControl
     {
-        public ItemsManagementView()
+        public RentalOrdersView()
         {
             InitializeComponent();
-        }
-
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

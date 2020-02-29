@@ -19,7 +19,7 @@ namespace VivesRental.GUI.ViewModels
 
         private List<Model.Item> items = new List<Model.Item>();
         private string[] possibleStatusList = Enum.GetNames(typeof(RentalItemStatus));
-
+        public ICommand EditRentalItemCommand { get; private set; }
 
         public List<Model.Item> Items
         {
@@ -37,6 +37,7 @@ namespace VivesRental.GUI.ViewModels
 
         public ItemsManagementViewModel()
         {
+            InstantiateCommands();
             var service = new ItemService();
             var include = new ItemIncludes
             {
@@ -44,6 +45,16 @@ namespace VivesRental.GUI.ViewModels
             };
             Items = (List<Model.Item>)service.All(include);
 
+        }
+
+        private void InstantiateCommands()
+        {
+            EditRentalItemCommand = new RelayCommand(EditRentalItem);
+        }
+
+        private void EditRentalItem()
+        {
+            Debug.WriteLine("editing");
         }
 
 

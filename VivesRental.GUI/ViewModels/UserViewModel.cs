@@ -14,6 +14,7 @@ namespace VivesRental.GUI.ViewModels
     class UserViewModel : ViewModelBase, IViewModel
     {
         private User user = new User();
+        private bool edit = false;
 
         public ICommand CreateUserCommand { get; private set; }
         public User User
@@ -31,6 +32,13 @@ namespace VivesRental.GUI.ViewModels
             InstantiateCommands();
         }
 
+        public UserViewModel(User user)
+        {
+            InstantiateCommands();
+            User = user;
+            edit = true;
+        }
+
         private void InstantiateCommands()
         {
             CreateUserCommand = new RelayCommand(CreateUser);
@@ -39,13 +47,13 @@ namespace VivesRental.GUI.ViewModels
         private void CreateUser()
         {
             var service = new UserService();
-            var createdUser = service.Create(User);
+            var createdOrUpdateUser = edit ? service.Edit(User) : service.Create(User);
 
-            if (createdUser == null)
+            if (createdOrUpdateUser == null)
             {
                 Debug.WriteLine("Whoops, something went wrong");
             }
-            else Debug.WriteLine("Created user: " + createdUser);
+            else Debug.WriteLine("Created user: " + createdOrUpdateUser);
         }
 	}
 }

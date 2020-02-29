@@ -75,7 +75,7 @@ namespace VivesRental.Services
         {
             using (var unitOfWork = unitOfWorkFactory.CreateInstance())
             {
-                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Normal &&
+                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Rented &&
                                                          ri.RentalOrderLines.Any(rol => !rol.ReturnedAt.HasValue)).ToList();
             }
         }
@@ -84,7 +84,7 @@ namespace VivesRental.Services
         {
             using (var unitOfWork = unitOfWorkFactory.CreateInstance())
             {
-                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Normal &&
+                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Rented &&
                                                          ri.RentalOrderLines.Any(rol => !rol.ReturnedAt.HasValue), includes).ToList();
             }
         }
@@ -93,7 +93,7 @@ namespace VivesRental.Services
         {
             using (var unitOfWork = unitOfWorkFactory.CreateInstance())
             {
-                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Normal &&
+                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Rented &&
                                                          ri.RentalOrderLines.Any(rol => !rol.ReturnedAt.HasValue && rol.RentalOrder.UserId == userId)).ToList();
             }
         }
@@ -102,7 +102,7 @@ namespace VivesRental.Services
         {
             using (var unitOfWork = unitOfWorkFactory.CreateInstance())
             {
-                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Normal &&
+                return unitOfWork.RentalItems.Find(ri => ri.Status == RentalItemStatus.Rented &&
                                                          ri.RentalOrderLines.Any(rol => !rol.ReturnedAt.HasValue && rol.RentalOrder.UserId == userId), includes).ToList();
             }
         }

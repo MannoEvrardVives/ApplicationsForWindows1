@@ -30,6 +30,7 @@
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"></GridViewColumn>
+                    <GridViewColumn Header="Available" DisplayMemberBinding="{Binding RentalItems.Count}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

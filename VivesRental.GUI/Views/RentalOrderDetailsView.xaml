@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="VivesRental.GUI.Views.RentalOrderDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VivesRental.GUI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="30">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0">RentalOrder:</Label>
+            <Label Content="{Binding RentalOrder.Id}" Grid.Column="1"></Label>
+            <Button Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}"/>
+        </Grid>
+        <ListView Grid.Row="1" ItemsSource="{Binding RentalOrder.RentalOrderLines}" Name="RentalOrderLinesListView" Margin="0px 20px 0px 0px">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ItemName}"></GridViewColumn>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding ItemDescription}"></GridViewColumn>
+                    <GridViewColumn Header="Rented at" DisplayMemberBinding="{Binding RentedAt}"></GridViewColumn>
+                    <GridViewColumn Header="Expires at" DisplayMemberBinding="{Binding ExpiresAt}"></GridViewColumn>
+                    <GridViewColumn Header="Returned at" DisplayMemberBinding="{Binding ReturnedAt}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="370">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Return order line" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ReturnRentalOrderLineCommand}" CommandParameter="{Binding ElementName=RentalOrderLinesListView, Path=SelectedItem}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

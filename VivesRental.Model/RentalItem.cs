@@ -30,6 +30,7 @@ namespace VivesRental.Model
         Broken = 1,
         InRepair = 2,
         Lost = 3,
-        Destroyed = 4
+        Destroyed = 4,
+        Rented = 5
     }
 }

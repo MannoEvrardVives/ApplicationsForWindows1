@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,14 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Messages;
+using VivesRental.Services;
 
 namespace VivesRental.GUI.ViewModels
 {
     class DashboardViewModel : ViewModelBase, IViewModel
     {
+
+        private int rentalOrderId = 0;
 
         public ICommand OpenUsersManagementViewCommand { get; private set; }
         public ICommand OpenItemsManagementViewCommand { get; private set; }
@@ -24,6 +28,16 @@ namespace VivesRental.GUI.ViewModels
         public DashboardViewModel()
         {
             InstantiateCommands();
+        }
+
+        public int RentalOrderId
+        {
+            get => rentalOrderId;
+            set
+            {
+                rentalOrderId = value;
+                RaisePropertyChanged();
+            }
         }
 
         private void InstantiateCommands()
@@ -37,7 +51,7 @@ namespace VivesRental.GUI.ViewModels
 
         private void OpenUsersManagementView()
         {
-            OpenView(new UserViewModel());
+            OpenView(new UsersViewModel());
         }
         private void OpenItemsManagementView()
         {
@@ -45,7 +59,7 @@ namespace VivesRental.GUI.ViewModels
         }
         private void OpenRentalManagementView()
         {
-
+            OpenView(new RentalOrdersViewModel());
         }
         private void OpenNewRentalView()
         {
@@ -53,7 +67,16 @@ namespace VivesRental.GUI.ViewModels
         }
         private void OpenReturnRentalView()
         {
-
+            if (rentalOrderId != 0)
+            {
+                var service = new RentalOrderService();
+                var rentalOrder = service.Get(RentalOrderId);
+                if (rentalOrder != null)
+                {
+                    OpenView(new RentalOrderDetailsViewModel(rentalOrder));
+                }
+                else Debug.WriteLine("Whoops, something went wrong");
+            }
         }
 
         private void OpenView(IViewModel viewModel)

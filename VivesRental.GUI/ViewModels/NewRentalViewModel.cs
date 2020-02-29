@@ -25,13 +25,13 @@ namespace VivesRental.GUI.ViewModels
     class NewRentalViewModel : ViewModelBase, IViewModel, INotifyPropertyChanged
     {
 
-        private List<Model.Item> items = new List<Model.Item>();
+        private ObservableCollection<Model.Item> items = new ObservableCollection<Model.Item>();
         private ObservableCollection<Model.Item> rentedItems = new ObservableCollection<Model.Item>();
         private int userId = 0;
 
         public ICommand AddRentalOrderCommand { get; private set; }
         public ICommand AddItemToRentCommand { get; private set; }
-        public List<Model.Item> Items
+        public ObservableCollection<Model.Item> Items
         {
             get => items;
             private set
@@ -68,7 +68,11 @@ namespace VivesRental.GUI.ViewModels
             {
                 RentalItems = true
             };
-            Items = (List<Model.Item>)service.All(include);
+            Items = new ObservableCollection<Item>(service.All(include));
+            foreach (var item in Items)
+            {
+                item.RentalItems = item.RentalItems.Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList();
+            }
         }
 
         private void InstantiateCommands()
@@ -92,7 +96,7 @@ namespace VivesRental.GUI.ViewModels
             {
                 if (item.Id.Equals(chosenItem.Id))
                 {
-                    if (item.RentalItems.Count < chosenItem.RentalItems.Count)
+                    if (chosenItem.RentalItems.Count > 0)
                     {
 
                         Item updateItem = new Item
@@ -106,9 +110,11 @@ namespace VivesRental.GUI.ViewModels
                             RentalItems = item.RentalItems
                         };
 
-                        updateItem.RentalItems.Add(chosenItem.RentalItems[updateItem.RentalItems.Count]);
+                        updateItem.RentalItems.Add(chosenItem.RentalItems.First());
                         rentedItems.Remove(item);
                         rentedItems.Add(updateItem);
+
+                        UpdateItemsOnSelection(chosenItem, 0);
 
                     }
                     else
@@ -131,7 +137,30 @@ namespace VivesRental.GUI.ViewModels
             };
             newItem.RentalItems.Add(chosenItem.RentalItems.First());
             rentedItems.Add(newItem);
+
+            UpdateItemsOnSelection(chosenItem, 0);
         }
+
+
+        private void UpdateItemsOnSelection(Model.Item chosenItem, int index)
+        {
+            chosenItem.RentalItems[index].Status = RentalItemStatus.Rented;
+
+            Item updateChosenItem = new Item
+            {
+                Id = chosenItem.Id,
+                Name = chosenItem.Name,
+                Description = chosenItem.Description,
+                Manufacturer = chosenItem.Manufacturer,
+                Publisher = chosenItem.Publisher,
+                RentalExpiresAfterDays = chosenItem.RentalExpiresAfterDays,
+                RentalItems = chosenItem.RentalItems.Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList()
+            };
+
+            items.Remove(chosenItem);
+            items.Add(updateChosenItem);
+        }
+
 
         private void AddRentalOrder()
         {
@@ -148,12 +177,22 @@ namespace VivesRental.GUI.ViewModels
             if (rentalOrder != null)
             {
                 var rentalOrderLineService = new RentalOrderLineService();
+                var rentalItemService = new RentalItemService();
                 foreach (var rentedItem in RentedItems)
                 {
                     foreach (var rentalItem in rentedItem.RentalItems)
                     {
                         rentalOrderLineService.Rent(rentalOrder.Id, rentalItem.Id);
+                        rentalItemService.Edit(rentalItem);
                     }
+
+                }
+                foreach (var item in Items)
+                {
+                    foreach (var rentalItem in item.RentalItems)
+                    {
+                        rentalItemService.Edit(rentalItem);
+                    } 
                 }
             }
             else Debug.WriteLine("Whoops, something went wrong");
