@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              >
-    <Grid Margin="30">
+    <Grid Margin="20, 10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -19,13 +19,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" >Firstname:</Label>
-        <TextBox Text="{Binding User.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding User.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="1">Name:</Label>
-        <TextBox Text="{Binding User.Name}" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding User.Name}" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="2">E-mail:</Label>
-        <TextBox Text="{Binding User.Email}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
+        <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding User.Email}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
         <Label Grid.Row="3">Phone number:</Label>
-        <TextBox Text="{Binding User.PhoneNumber}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
-        <Button Content="Save" Command="{Binding CreateUserCommand}"  Grid.Row="4"/>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding User.PhoneNumber}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="Save" Command="{Binding CreateUserCommand}"  Grid.Row="4" Margin="0, 10"/>
     </Grid>
 </UserControl>

@@ -6,23 +6,38 @@
              xmlns:local="clr-namespace:VivesRental.GUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="#E5E5E5" />
+                <Setter Property="FontSize" Value="15px" />
+                <Setter Property="Height" Value="100px" />
+                <Setter Property="MaxWidth" Value="200px" />
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid Margin="30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Button Content="Open Users Management" Command="{Binding OpenUsersManagementViewCommand}" Grid.Column="0" Margin="10"/>
-        <Button Content="Open Items Management" Command="{Binding OpenItemsManagementViewCommand}" Grid.Column="1" Margin="10" />
-        <Button Content="Open Rental Management" Command="{Binding OpenRentalManagementViewCommand}" Grid.Column="2" Margin="10" />
-        <Button Content="Open New Rental" Command="{Binding OpenNewRentalViewCommand}" Grid.Column="3" Margin="10" />
-        <Button Content="Open Return Rental" Command="{Binding OpenReturnRentalViewCommand}" Grid.Column="4" Margin="10" />
-        <TextBox Text="{Binding RentalOrderId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="4" Margin="0,5,0,5" />
+        <Label FontSize="20px" Grid.ColumnSpan="5">Welcome to the Vives Rental portal</Label>
+
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="Users Management" Command="{Binding OpenUsersManagementViewCommand}" Grid.Column="0" Grid.Row="1" Margin="10"/>
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="Items Management" Command="{Binding OpenItemsManagementViewCommand}" Grid.Column="1" Grid.Row="1" Margin="10" />
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="Rental Management" Command="{Binding OpenRentalManagementViewCommand}" Grid.Column="2" Grid.Row="1" Margin="10" />
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="New Rental" Command="{Binding OpenNewRentalViewCommand}" Grid.Column="0" Grid.Row="2" Margin="10" />
+        <Button Template="{StaticResource RoundedButtonTemplate}" Content="Return Rental" Command="{Binding OpenReturnRentalViewCommand}" Grid.Column="1" Grid.Row="2" Margin="10" />
+        <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding RentalOrderId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" MaxWidth="200" />
     </Grid>
 </UserControl>

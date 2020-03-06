@@ -26,7 +26,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0">RentalOrder:</Label>
             <Label Content="{Binding RentalOrder.Id}" Grid.Column="1"></Label>
-            <Button Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}"/>
+            <Button Template="{StaticResource RoundedButtonTemplate}" Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}"/>
         </Grid>
         <ListView Grid.Row="1" ItemsSource="{Binding RentalOrder.RentalOrderLines}" Name="RentalOrderLinesListView" Margin="0px 20px 0px 0px">
             <ListView.View>
@@ -40,7 +40,7 @@
                     <GridViewColumn Header="" Width="370">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Return order line" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ReturnRentalOrderLineCommand}" CommandParameter="{Binding ElementName=RentalOrderLinesListView, Path=SelectedItem}"/>
+                                <Button Template="{StaticResource RoundedButtonTemplate}" Content="Return order line" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ReturnRentalOrderLineCommand}" CommandParameter="{Binding ElementName=RentalOrderLinesListView, Path=SelectedItem}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
