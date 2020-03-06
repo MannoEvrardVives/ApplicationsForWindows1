@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Messages;
+using VivesRental.GUI.Services;
 using VivesRental.Services;
 
 namespace VivesRental.GUI.ViewModels
@@ -51,19 +52,19 @@ namespace VivesRental.GUI.ViewModels
 
         private void OpenUsersManagementView()
         {
-            OpenView(new UsersViewModel());
+            NavigationService.OpenView(new UsersViewModel());
         }
         private void OpenItemsManagementView()
         {
-            OpenView(new ItemsManagementViewModel());
+            NavigationService.OpenView(new ItemsManagementViewModel());
         }
         private void OpenRentalManagementView()
         {
-            OpenView(new RentalOrdersViewModel());
+            NavigationService.OpenView(new RentalOrdersViewModel());
         }
         private void OpenNewRentalView()
         {
-            OpenView(new NewRentalViewModel());
+            NavigationService.OpenView(new NewRentalViewModel());
         }
         private void OpenReturnRentalView()
         {
@@ -73,16 +74,11 @@ namespace VivesRental.GUI.ViewModels
                 var rentalOrder = service.Get(RentalOrderId);
                 if (rentalOrder != null)
                 {
-                    OpenView(new RentalOrderDetailsViewModel(rentalOrder));
+                    NavigationService.OpenView(new RentalOrderDetailsViewModel(rentalOrder));
                 }
                 else Debug.WriteLine("Whoops, something went wrong");
             }
         }
 
-        private void OpenView(IViewModel viewModel)
-        {
-            var message = new NavigationMessage { ViewModel = viewModel };
-            Messenger.Default.Send(message);
-        }
     }
 }

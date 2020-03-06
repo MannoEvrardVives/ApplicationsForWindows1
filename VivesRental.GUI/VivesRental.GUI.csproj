@@ -82,10 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Contracts\IViewModel.cs" />
     <Compile Include="Messages\NavigationMessage.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\RentalItem.cs" />
-    <Compile Include="Models\RentalOrder.cs" />
-    <Compile Include="Models\RentalOrderLine.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ToastService.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\ItemsManagementViewModel.cs" />

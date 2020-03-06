@@ -12,13 +12,11 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
-using VivesRental.GUI.Models;
+using VivesRental.GUI.Services;
 using VivesRental.Model;
 using VivesRental.Repository.Includes;
 using VivesRental.Services;
 using Item = VivesRental.Model.Item;
-using RentalItem = VivesRental.Model.RentalItem;
-using RentalOrder = VivesRental.GUI.Models.RentalOrder;
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -194,6 +192,7 @@ namespace VivesRental.GUI.ViewModels
                         rentalItemService.Edit(rentalItem);
                     } 
                 }
+                NavigationService.OpenView(new RentalOrdersViewModel());
             }
             else Debug.WriteLine("Whoops, something went wrong");
 

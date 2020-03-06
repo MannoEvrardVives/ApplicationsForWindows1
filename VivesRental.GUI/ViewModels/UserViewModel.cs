@@ -1,11 +1,11 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
-using VivesRental.GUI.Models;
 using VivesRental.Services;
 using System.Diagnostics;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
+using VivesRental.GUI.Services;
 using VivesRental.Model;
 
 
@@ -53,7 +53,10 @@ namespace VivesRental.GUI.ViewModels
             {
                 Debug.WriteLine("Whoops, something went wrong");
             }
-            else Debug.WriteLine("Created user: " + createdOrUpdateUser);
+            else
+            {
+                NavigationService.OpenView(new UsersViewModel());
+            }
         }
 	}
 }

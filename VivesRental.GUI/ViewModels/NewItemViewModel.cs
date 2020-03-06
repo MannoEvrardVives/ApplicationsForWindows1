@@ -8,8 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
-using VivesRental.GUI.Models;
-using VivesRental.Model;
+using VivesRental.GUI.Services;
 using VivesRental.Services;
 
 namespace VivesRental.GUI.ViewModels
@@ -68,7 +67,7 @@ namespace VivesRental.GUI.ViewModels
                 {
                     rentalItemService.Create(new Model.RentalItem(createdItem));
                 }
-                Debug.WriteLine("Created item");
+                NavigationService.OpenView(new ItemsManagementViewModel());
             }
         }
 
