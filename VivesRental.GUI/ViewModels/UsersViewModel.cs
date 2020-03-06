@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -9,6 +11,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Messages;
+using VivesRental.GUI.Services;
 using VivesRental.Model;
 using VivesRental.Services;
 
@@ -17,10 +20,11 @@ namespace VivesRental.GUI.ViewModels
     class UsersViewModel : ViewModelBase, IViewModel
     {
 
-        private List<Model.User> users = new List<Model.User>();
+        private ObservableCollection<User> users = new ObservableCollection<User>();
+        private bool _isLoading;
 
         public ICommand ViewUserCommand { get; private set; }
-        public List<Model.User> Users
+        public ObservableCollection<User> Users
         {
             get => users;
             private set
@@ -29,14 +33,32 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged();
             }
         }
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
 
 
         public UsersViewModel()
         {
             InstantiateCommands();
-            var service = new UserService();
-            Users = (List<User>)service.All();
+            GetUsers();
+        }
 
+        private void GetUsers()
+        {
+            IsLoading = true;
+            var service = new UserService();
+            Task.Run(() =>
+            {
+                Users = new ObservableCollection<User>(service.All());
+                IsLoading = false;
+            });
         }
 
         private void InstantiateCommands()
@@ -46,14 +68,10 @@ namespace VivesRental.GUI.ViewModels
 
         private void OpenUserView(User user)
         {
-            OpenView(new UserViewModel(user));
+            NavigationService.OpenView(new UserViewModel(user));
         }
 
-        private void OpenView(IViewModel viewModel)
-        {
-            var message = new NavigationMessage { ViewModel = viewModel };
-            Messenger.Default.Send(message);
-        }
+        
 
     }
 }

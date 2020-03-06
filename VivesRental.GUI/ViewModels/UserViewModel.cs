@@ -2,11 +2,15 @@
 using GalaSoft.MvvmLight;
 using VivesRental.Services;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Services;
 using VivesRental.Model;
+using WPFNotification.Model;
+using WPFNotification.Services;
 
 
 namespace VivesRental.GUI.ViewModels
@@ -14,8 +18,8 @@ namespace VivesRental.GUI.ViewModels
     class UserViewModel : ViewModelBase, IViewModel
     {
         private User user = new User();
-        private bool edit = false;
-
+        private readonly bool edit = false;
+        private bool _isLoading;
         public ICommand CreateUserCommand { get; private set; }
         public User User
         {
@@ -26,10 +30,19 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("User");
             }
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         public UserViewModel()
         {
             InstantiateCommands();
+            
         }
 
         public UserViewModel(User user)
@@ -46,17 +59,23 @@ namespace VivesRental.GUI.ViewModels
 
         private void CreateUser()
         {
-            var service = new UserService();
-            var createdOrUpdateUser = edit ? service.Edit(User) : service.Create(User);
-
-            if (createdOrUpdateUser == null)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                Debug.WriteLine("Whoops, something went wrong");
-            }
-            else
-            {
-                NavigationService.OpenView(new UsersViewModel());
-            }
+                var service = new UserService();
+                var createdOrUpdateUser = edit ? service.Edit(User) : service.Create(User);
+                IsLoading = false;
+                if (createdOrUpdateUser == null)
+                {
+                    Debug.WriteLine("Whoops, something went wrong");
+                }
+                else
+                {
+                    NavigationService.OpenView(new UsersViewModel());
+                }
+            });
+            
+            
         }
 	}
 }

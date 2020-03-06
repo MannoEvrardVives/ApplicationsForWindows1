@@ -18,6 +18,7 @@ namespace VivesRental.GUI.ViewModels
 
         private Model.Item item = new Model.Item();
         private int numberOfRentalItems = 0;
+        private bool _isLoading;
 
         public ICommand CreateItemCommand { get; private set; }
         public Model.Item Item
@@ -38,7 +39,15 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         public NewItemViewModel()
         {
             InstantiateCommands();
@@ -51,24 +60,32 @@ namespace VivesRental.GUI.ViewModels
 
         private void CreateItem()
         {
-
-            var service = new ItemService();
-            var createdItem = service.Create(Item);
-
-            if (createdItem == null)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                Debug.WriteLine("Whoops, something went wrong");
-            }
-            else
-            {
-                var rentalItemService = new RentalItemService();
+                var service = new ItemService();
+                var createdItem = service.Create(Item);
 
-                for (var i = 0; i < numberOfRentalItems; i++)
+                if (createdItem == null)
                 {
-                    rentalItemService.Create(new Model.RentalItem(createdItem));
+                    IsLoading = false;
+                    Debug.WriteLine("Whoops, something went wrong");
                 }
-                NavigationService.OpenView(new ItemsManagementViewModel());
-            }
+                else
+                {
+                    var rentalItemService = new RentalItemService();
+
+                    for (var i = 0; i < numberOfRentalItems; i++)
+                    {
+                        rentalItemService.Create(new Model.RentalItem(createdItem));
+                    }
+
+                    IsLoading = false;
+                    NavigationService.OpenView(new ItemsManagementViewModel());
+                }
+            });
+
+            
         }
 
     }

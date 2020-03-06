@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,12 @@ namespace VivesRental.GUI.ViewModels
     class ItemsManagementViewModel : ViewModelBase, IViewModel
     {
 
-        private List<Model.Item> items = new List<Model.Item>();
+        private ObservableCollection<Item> items = new ObservableCollection<Item>();
         private string[] possibleStatusList = Enum.GetNames(typeof(RentalItemStatus));
+        private bool _isLoading;
         public ICommand EditRentalItemCommand { get; private set; }
 
-        public List<Model.Item> Items
+        public ObservableCollection<Item> Items
         {
             get => items;
             private set
@@ -34,16 +36,30 @@ namespace VivesRental.GUI.ViewModels
         {
             get => possibleStatusList;
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         public ItemsManagementViewModel()
         {
+            IsLoading = true;
             InstantiateCommands();
             var service = new ItemService();
             var include = new ItemIncludes
             {
                 RentalItems = true
             };
-            Items = (List<Model.Item>)service.All(include);
+            Task.Run(() =>
+            {
+                Items =  new ObservableCollection<Item>(service.All(include));
+                IsLoading = false;
+            });
+
 
         }
 

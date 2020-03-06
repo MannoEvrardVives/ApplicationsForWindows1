@@ -74,6 +74,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFNotification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFNotification.1.1.0\lib\WPFNotification.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -81,6 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Contracts\IViewModel.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Messages\NavigationMessage.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ToastService.cs" />

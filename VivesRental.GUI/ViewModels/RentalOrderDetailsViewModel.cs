@@ -17,6 +17,7 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private RentalOrder rentalOrder;
+        private bool _isLoading;
         private readonly RentalOrderService service = new RentalOrderService();
         private readonly RentalOrderLineService rentalOrderLinesService = new RentalOrderLineService();
         public ICommand ReturnRentalOrderCommand { get; private set; }
@@ -24,9 +25,13 @@ namespace VivesRental.GUI.ViewModels
 
         public RentalOrderDetailsViewModel(RentalOrder rentalOrder)
         {
+            IsLoading = true;
             InstantiateCommands();
             RentalOrder = rentalOrder;
-            RentalOrder.RentalOrderLines = rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id);
+            Task.Run(() => {
+                RentalOrder.RentalOrderLines = rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id);
+                IsLoading = false;
+            });
         }
 
         public RentalOrder RentalOrder
@@ -38,7 +43,15 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         private void InstantiateCommands()
         {
             ReturnRentalOrderCommand = new RelayCommand(ReturnRentalOrder);
@@ -47,23 +60,36 @@ namespace VivesRental.GUI.ViewModels
 
         private void ReturnRentalOrder()
         {
-            //TODO when returning rental item status should be set to normal
-            var returned = service.Return(RentalOrder.Id, DateTime.Now);
-            if (!returned)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                Debug.WriteLine("Whoops, something went wrong");
-            }
-            else Debug.WriteLine("returned");
+                //TODO when returning rental item status should be set to normal
+                var returned = service.Return(RentalOrder.Id, DateTime.Now);
+                if (!returned)
+                {
+                    Debug.WriteLine("Whoops, something went wrong");
+                }
+                else Debug.WriteLine("returned");
+
+                IsLoading = false;
+            });
         }
 
         private void ReturnRentalOrderLine(RentalOrderLine rentalOrderLine)
         {
-            var returned = rentalOrderLinesService.Return(rentalOrderLine.Id, DateTime.Now);
-            if (!returned)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                Debug.WriteLine("Whoops, something went wrong");
-            }
-            else Debug.WriteLine("returned");
+                var returned = rentalOrderLinesService.Return(rentalOrderLine.Id, DateTime.Now);
+                if (!returned)
+                {
+                    Debug.WriteLine("Whoops, something went wrong");
+                }
+                else Debug.WriteLine("returned");
+
+                IsLoading = false;
+            });
+
         }
 
     }

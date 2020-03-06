@@ -8,22 +8,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView ItemsSource="{Binding RentalOrders}" Name="RentalOrderListView" Margin="10">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction 
-                        Command="{Binding ViewRentalOrderCommand}"
-                        CommandParameter="{Binding ElementName=RentalOrderListView, Path=SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
-                    <GridViewColumn Header="User Firstname" DisplayMemberBinding="{Binding UserFirstName}"></GridViewColumn>
-                    <GridViewColumn Header="User Name" DisplayMemberBinding="{Binding UserName}"></GridViewColumn>
-                    <GridViewColumn Header="Created at" DisplayMemberBinding="{Binding CreatedAt}"></GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid>
+            <ListView ItemsSource="{Binding RentalOrders}" Name="RentalOrderListView" Margin="10">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction 
+                            Command="{Binding ViewRentalOrderCommand}"
+                            CommandParameter="{Binding ElementName=RentalOrderListView, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                        <GridViewColumn Header="User Firstname" DisplayMemberBinding="{Binding UserFirstName}"></GridViewColumn>
+                        <GridViewColumn Header="User Name" DisplayMemberBinding="{Binding UserName}"></GridViewColumn>
+                        <GridViewColumn Header="Created at" DisplayMemberBinding="{Binding CreatedAt}"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Loading...</TextBlock>
+        </Grid>
     </Grid>
+    
 </UserControl>

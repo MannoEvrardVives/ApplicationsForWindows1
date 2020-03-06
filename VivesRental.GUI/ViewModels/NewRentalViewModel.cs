@@ -25,6 +25,7 @@ namespace VivesRental.GUI.ViewModels
 
         private ObservableCollection<Model.Item> items = new ObservableCollection<Model.Item>();
         private ObservableCollection<Model.Item> rentedItems = new ObservableCollection<Model.Item>();
+        private bool _isLoading;
         private int userId = 0;
 
         public ICommand AddRentalOrderCommand { get; private set; }
@@ -56,9 +57,18 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("UserId");
             }
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         public NewRentalViewModel()
         {
+            IsLoading = true;
             InstantiateCommands();
 
             var service = new ItemService();
@@ -66,11 +76,18 @@ namespace VivesRental.GUI.ViewModels
             {
                 RentalItems = true
             };
-            Items = new ObservableCollection<Item>(service.All(include));
-            foreach (var item in Items)
+            Task.Run(() =>
             {
-                item.RentalItems = item.RentalItems.Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList();
-            }
+                Items = new ObservableCollection<Item>(service.All(include));
+                foreach (var item in Items)
+                {
+                    item.RentalItems = item.RentalItems
+                        .Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList();
+                }
+
+                IsLoading = false;
+            });
+
         }
 
         private void InstantiateCommands()
@@ -169,32 +186,43 @@ namespace VivesRental.GUI.ViewModels
                 return;
             }
 
-            var service = new RentalOrderService();
-            var rentalOrder = service.Create(UserId);
-
-            if (rentalOrder != null)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                var rentalOrderLineService = new RentalOrderLineService();
-                var rentalItemService = new RentalItemService();
-                foreach (var rentedItem in RentedItems)
+                var service = new RentalOrderService();
+                var rentalOrder = service.Create(UserId);
+
+                if (rentalOrder != null)
                 {
-                    foreach (var rentalItem in rentedItem.RentalItems)
+                    var rentalOrderLineService = new RentalOrderLineService();
+                    var rentalItemService = new RentalItemService();
+                    foreach (var rentedItem in RentedItems)
                     {
-                        rentalOrderLineService.Rent(rentalOrder.Id, rentalItem.Id);
-                        rentalItemService.Edit(rentalItem);
+                        foreach (var rentalItem in rentedItem.RentalItems)
+                        {
+                            rentalOrderLineService.Rent(rentalOrder.Id, rentalItem.Id);
+                            rentalItemService.Edit(rentalItem);
+                        }
+
+                    }
+                    foreach (var item in Items)
+                    {
+                        foreach (var rentalItem in item.RentalItems)
+                        {
+                            rentalItemService.Edit(rentalItem);
+                        }
                     }
 
+                    IsLoading = false;
+                    NavigationService.OpenView(new RentalOrdersViewModel());
+                    
                 }
-                foreach (var item in Items)
+                else
                 {
-                    foreach (var rentalItem in item.RentalItems)
-                    {
-                        rentalItemService.Edit(rentalItem);
-                    } 
+                    IsLoading = false;
+                    Debug.WriteLine("Whoops, something went wrong");
                 }
-                NavigationService.OpenView(new RentalOrdersViewModel());
-            }
-            else Debug.WriteLine("Whoops, something went wrong");
+            });
 
 
         }

@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Messages;
+using VivesRental.GUI.Services;
 using VivesRental.Model;
 using VivesRental.Repository.Includes;
 using VivesRental.Services;
@@ -19,10 +20,10 @@ namespace VivesRental.GUI.ViewModels
     class RentalOrdersViewModel : ViewModelBase, IViewModel
     {
 
-        private List<Model.RentalOrder> rentalOrders = new List<Model.RentalOrder>();
-        
+        private ObservableCollection<RentalOrder> rentalOrders = new ObservableCollection<RentalOrder>();
+        private bool _isLoading;
         public ICommand ViewRentalOrderCommand { get; private set; }
-        public List<Model.RentalOrder> RentalOrders
+        public ObservableCollection<RentalOrder> RentalOrders
         {
             get => rentalOrders;
             private set
@@ -31,14 +32,27 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public RentalOrdersViewModel()
         {
+            IsLoading = true;
             InstantiateCommands();
+            Task.Run(() =>
+            {
+                var service = new RentalOrderService();
+                RentalOrders = new ObservableCollection<RentalOrder>(service.All());
+                IsLoading = false;
+            });
 
-            var service = new RentalOrderService();
-            RentalOrders = (List<RentalOrder>)service.All();
 
         }
 
@@ -49,14 +63,9 @@ namespace VivesRental.GUI.ViewModels
 
         private void OpenRentalOrderView(RentalOrder chosenRentalOrder)
         {
-            OpenView(new RentalOrderDetailsViewModel(chosenRentalOrder));
+            NavigationService.OpenView(new RentalOrderDetailsViewModel(chosenRentalOrder));
         }
 
-        private void OpenView(IViewModel viewModel)
-        {
-            var message = new NavigationMessage { ViewModel = viewModel };
-            Messenger.Default.Send(message);
-        }
 
     }
 }

@@ -1,10 +1,14 @@
 using System.Windows;
 using System.Windows.Input;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Messages;
+using WPFNotification.Model;
+using WPFNotification.Services;
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -12,7 +16,6 @@ namespace VivesRental.GUI.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private IViewModel _currentViewModel;
-
 
         #region Properties
 
@@ -41,7 +44,7 @@ namespace VivesRental.GUI.ViewModels
 
         public MainViewModel()
         {
-            CurrentViewModel = MainViewModel._dashboardViewModel;
+            CurrentViewModel = _dashboardViewModel;
             InstantiateCommands();
             InitializeMessenger();
         }

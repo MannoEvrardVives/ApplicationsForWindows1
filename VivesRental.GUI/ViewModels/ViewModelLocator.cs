@@ -14,6 +14,7 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using WPFNotification.Services;
 
 namespace VivesRental.GUI.ViewModels
 {
@@ -40,7 +41,6 @@ namespace VivesRental.GUI.ViewModels
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
