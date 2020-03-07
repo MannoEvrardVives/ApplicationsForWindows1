@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -19,6 +20,7 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private int rentalOrderId = 0;
+        private bool _isLoading;
 
         public ICommand OpenUsersManagementViewCommand { get; private set; }
         public ICommand OpenItemsManagementViewCommand { get; private set; }
@@ -40,7 +42,15 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged();
             }
         }
-
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
         private void InstantiateCommands()
         {
             OpenUsersManagementViewCommand = new RelayCommand(OpenUsersManagementView);
@@ -68,16 +78,26 @@ namespace VivesRental.GUI.ViewModels
         }
         private void OpenReturnRentalView()
         {
-            if (rentalOrderId != 0)
+
+            if (rentalOrderId == 0)
             {
+                MessageBox.Show("¨Please enter a valid rental order id", "Return rental");
+                return;
+            }
+
+            try
+            {
+                IsLoading = true;
                 var service = new RentalOrderService();
                 var rentalOrder = service.Get(RentalOrderId);
-                if (rentalOrder != null)
-                {
-                    NavigationService.OpenView(new RentalOrderDetailsViewModel(rentalOrder));
-                }
-                else Debug.WriteLine("Whoops, something went wrong");
+                IsLoading = false;
+                NavigationService.OpenView(new RentalOrderDetailsViewModel(rentalOrder));
             }
+            catch (Exception ex)
+            {
+                IsLoading = false;
+            }
+
         }
 
     }

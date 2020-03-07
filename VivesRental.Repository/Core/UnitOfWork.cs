@@ -1,4 +1,7 @@
-﻿using VivesRental.Repository.Contracts;
+﻿using System;
+using System.Diagnostics;
+using VivesRental.Repository.Contracts;
+using VivesRental.Repository.Exceptions;
 
 namespace VivesRental.Repository.Core
 {
@@ -10,6 +13,12 @@ namespace VivesRental.Repository.Core
         {
             string connectionString = "server=MANNOBC96\\SQLEXPRESS;database=VivesRental;trusted_connection=true;";
             _context = new VivesRentalDbContext(connectionString);
+
+            if (!_context.Database.Exists())
+            {
+                throw new NoDatabaseConnectionException();
+            }
+
             Items = new ItemRepository(_context);
             RentalItems = new RentalItemRepository(_context);
             RentalOrders = new RentalOrderRepository(_context);

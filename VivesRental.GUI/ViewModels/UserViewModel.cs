@@ -3,14 +3,13 @@ using GalaSoft.MvvmLight;
 using VivesRental.Services;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
 using VivesRental.GUI.Services;
 using VivesRental.Model;
-using WPFNotification.Model;
-using WPFNotification.Services;
 
 
 namespace VivesRental.GUI.ViewModels
@@ -62,17 +61,18 @@ namespace VivesRental.GUI.ViewModels
             IsLoading = true;
             Task.Run(() =>
             {
-                var service = new UserService();
-                var createdOrUpdateUser = edit ? service.Edit(User) : service.Create(User);
-                IsLoading = false;
-                if (createdOrUpdateUser == null)
+                try
                 {
-                    Debug.WriteLine("Whoops, something went wrong");
-                }
-                else
-                {
+                    var service = new UserService();
+                    var createdOrUpdateUser = edit ? service.Edit(User) : service.Create(User);
+                    IsLoading = false;
                     NavigationService.OpenView(new UsersViewModel());
                 }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
+                
             });
             
             

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Services.Contracts;
+using VivesRental.Services.Exceptions;
 using VivesRental.Services.Extensions;
 using VivesRental.Services.Factories;
 
@@ -24,89 +26,129 @@ namespace VivesRental.Services
 
 		public User Get(int id)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                return unitOfWork.Users.Get(id);
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+                {
+                    return unitOfWork.Users.Get(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public IList<User> All()
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                return unitOfWork.Users.GetAll().ToList();
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+                {
+                    return unitOfWork.Users.GetAll().ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public User Create(User entity)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                if (!entity.IsValid())
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
                 {
-                    return null;
+                    if (!entity.IsValid())
+                    {
+                        throw new InvalidInputException();
+                    }
+
+                    var user = new User
+                    {
+                        FirstName = entity.FirstName,
+                        Name = entity.Name,
+                        Email = entity.Email,
+                        PhoneNumber = entity.PhoneNumber
+                    };
+
+                    unitOfWork.Users.Add(user);
+                    var numberOfObjectsUpdated = unitOfWork.Complete();
+
+                    if (numberOfObjectsUpdated > 0)
+                        return user;
+
+                    throw new OperationFailedException();
                 }
-
-	            var user = new User
-	            {
-		            FirstName = entity.FirstName,
-		            Name = entity.Name,
-		            Email = entity.Email,
-		            PhoneNumber = entity.PhoneNumber
-				};
-
-                unitOfWork.Users.Add(user);
-                var numberOfObjectsUpdated = unitOfWork.Complete();
-
-                if (numberOfObjectsUpdated > 0)
-                    return user;
-
-                return null;
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public User Edit(User entity)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                if (!entity.IsValid())
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
                 {
-                    return null;
-                }
+                    if (!entity.IsValid())
+                    {
+                        throw new InvalidInputException();
+                    }
 
-                //Get Item from unitOfWork
-                var user = unitOfWork.Users.Get(entity.Id);
-                if (user == null)
-                {
-                    return null;
-                }
+                    //Get Item from unitOfWork
+                    var user = unitOfWork.Users.Get(entity.Id);
+                    if (user == null)
+                    {
+                       throw new UserNotFoundException();
+                    }
 
-                //Only update the properties we want to update
-                user.FirstName = entity.FirstName;
-                user.Name = entity.Name;
-                user.Email = entity.Email;
-                user.PhoneNumber = entity.PhoneNumber;
-                
-                var numberOfObjectsUpdated = unitOfWork.Complete();
-                if (numberOfObjectsUpdated > 0)
-                    return entity;
-                return null;
+                    //Only update the properties we want to update
+                    user.FirstName = entity.FirstName;
+                    user.Name = entity.Name;
+                    user.Email = entity.Email;
+                    user.PhoneNumber = entity.PhoneNumber;
+
+                    var numberOfObjectsUpdated = unitOfWork.Complete();
+                    if (numberOfObjectsUpdated > 0)
+                        return entity;
+                    throw new OperationFailedException();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public bool Remove(int id)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                var user = unitOfWork.Users.Get(id);
-                if (user == null)
-                    return false;
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+                {
+                    var user = unitOfWork.Users.Get(id);
+                    if (user == null)
+                        return false;
 
-                unitOfWork.Users.Remove(user);
+                    unitOfWork.Users.Remove(user);
 
-                var numberOfObjectsUpdated = unitOfWork.Complete();
-                return numberOfObjectsUpdated > 0;
+                    var numberOfObjectsUpdated = unitOfWork.Complete();
+                    if (numberOfObjectsUpdated > 0)
+                        return true;
+                    throw new OperationFailedException();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

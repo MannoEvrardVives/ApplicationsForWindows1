@@ -37,7 +37,7 @@
                 </ListView.View>
             </ListView>
 
-            <ListView Grid.Column="1" ItemsSource="{Binding RentedItems}" Margin="10" Name="RentedItemsListView">
+            <ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding RentedItems}" Margin="10" Name="RentedItemsListView">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding RentalItems.Count}"></GridViewColumn>
@@ -47,7 +47,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5" />
+            <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Margin="10" />
             <Button Template="{StaticResource RoundedButtonTemplate}" Content="Save rental order" Command="{Binding AddRentalOrderCommand}" Grid.Row="1" Grid.Column="1" Margin="10" />
         </Grid>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">

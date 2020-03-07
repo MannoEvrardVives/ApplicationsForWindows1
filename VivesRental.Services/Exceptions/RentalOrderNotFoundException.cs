@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace VivesRental.Services.Exceptions
+{
+    class RentalOrderNotFoundException : Exception
+    {
+        public RentalOrderNotFoundException()
+        {
+            MessageBox.Show("Oops, we can't seem to find that rental order");
+        }
+
+        public RentalOrderNotFoundException(string message)
+            : base(message)
+        {
+        }
+
+        public RentalOrderNotFoundException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+}

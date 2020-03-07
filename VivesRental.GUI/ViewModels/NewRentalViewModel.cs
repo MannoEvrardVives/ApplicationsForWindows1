@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -102,8 +103,7 @@ namespace VivesRental.GUI.ViewModels
 
             if (chosenItem.RentalItems.Count == 0)
             {
-                //TODO: show message saying there are no rentalItems available
-                Debug.WriteLine("No items to be rented");
+                MessageBox.Show("Oops, there are no items available.", "Add new rental");
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace VivesRental.GUI.ViewModels
                     }
                     else
                     {
-                        Debug.WriteLine("No items to be rented anymore, out of stock");
+                        MessageBox.Show("Oops, there are no items available.", "Add new rental");
                     }
                     return;
                 }
@@ -157,7 +157,7 @@ namespace VivesRental.GUI.ViewModels
         }
 
 
-        private void UpdateItemsOnSelection(Model.Item chosenItem, int index)
+        private void UpdateItemsOnSelection(Item chosenItem, int index)
         {
             chosenItem.RentalItems[index].Status = RentalItemStatus.Rented;
 
@@ -181,19 +181,25 @@ namespace VivesRental.GUI.ViewModels
         {
             if (rentedItems.Count == 0)
             {
-                //TODO: show message saying there are no items selected
-                Debug.WriteLine("No items to be rented");
+                MessageBox.Show("Select at least one item to be rented out.", "Add new rental");
+                return;
+            }
+
+            if (UserId == 0)
+            {
+                MessageBox.Show("Please enter a valid user id.", "Add new rental");
                 return;
             }
 
             IsLoading = true;
             Task.Run(() =>
             {
-                var service = new RentalOrderService();
-                var rentalOrder = service.Create(UserId);
 
-                if (rentalOrder != null)
+                try
                 {
+                    var service = new RentalOrderService();
+                    var rentalOrder = service.Create(UserId);
+
                     var rentalOrderLineService = new RentalOrderLineService();
                     var rentalItemService = new RentalItemService();
                     foreach (var rentedItem in RentedItems)
@@ -215,12 +221,10 @@ namespace VivesRental.GUI.ViewModels
 
                     IsLoading = false;
                     NavigationService.OpenView(new RentalOrdersViewModel());
-                    
                 }
-                else
+                catch (Exception ex)
                 {
                     IsLoading = false;
-                    Debug.WriteLine("Whoops, something went wrong");
                 }
             });
 

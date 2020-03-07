@@ -16,7 +16,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="0, 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
@@ -27,9 +27,9 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0">RentalOrder:</Label>
                 <Label Content="{Binding RentalOrder.Id}" Grid.Column="1"></Label>
-                <Button Template="{StaticResource RoundedButtonTemplate}" Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}"/>
+                <Button Template="{StaticResource RoundedButtonTemplate}" Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}" Padding="10, 0"/>
             </Grid>
-            <ListView Grid.Row="1" ItemsSource="{Binding RentalOrder.RentalOrderLines}" Name="RentalOrderLinesListView" Margin="0px 20px 0px 0px">
+            <ListView Grid.Row="1" ItemsSource="{Binding RentalOrderLines}" Name="RentalOrderLinesListView">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>

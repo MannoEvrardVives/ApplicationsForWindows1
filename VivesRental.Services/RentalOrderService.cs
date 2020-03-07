@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Services.Contracts;
+using VivesRental.Services.Exceptions;
 using VivesRental.Services.Factories;
 
 namespace VivesRental.Services
@@ -24,62 +25,102 @@ namespace VivesRental.Services
 
 		public RentalOrder Get(int id)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                return unitOfWork.RentalOrders.Get(id);
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+                {
+                    var rentalOrder = unitOfWork.RentalOrders.Get(id);
+                    if (rentalOrder == null)
+                    {
+                        throw new RentalOrderNotFoundException();
+                    }
+
+                    return rentalOrder;
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public IList<RentalOrder> All()
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                return unitOfWork.RentalOrders.GetAll().ToList();
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+                {
+                    return unitOfWork.RentalOrders.GetAll().ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public RentalOrder Create(int userId)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-	            var user = unitOfWork.Users.Get(userId);
-	            if (user == null)
-	            {
-		            return null;
-	            }
-
-				var rentalOrder = new RentalOrder
-				{
-					UserId = user.Id,
-					UserFirstName = user.FirstName,
-					UserName = user.Name,
-					UserEmail = user.Email,
-					CreatedAt = DateTime.Now
-				};
-
-                unitOfWork.RentalOrders.Add(rentalOrder);
-                var numberOfObjectsUpdated = unitOfWork.Complete();
-                if( numberOfObjectsUpdated > 0)
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
                 {
-                    return rentalOrder;
+                    var user = unitOfWork.Users.Get(userId);
+                    if (user == null)
+                    {
+                        throw new UserNotFoundException();
+                    }
+
+                    var rentalOrder = new RentalOrder
+                    {
+                        UserId = user.Id,
+                        UserFirstName = user.FirstName,
+                        UserName = user.Name,
+                        UserEmail = user.Email,
+                        CreatedAt = DateTime.Now
+                    };
+
+                    unitOfWork.RentalOrders.Add(rentalOrder);
+                    var numberOfObjectsUpdated = unitOfWork.Complete();
+                    if (numberOfObjectsUpdated > 0)
+                    {
+                        return rentalOrder;
+                    }
+                    throw new OperationFailedException();
                 }
-                return null;
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public bool Return(int rentalOrderId, DateTime returnedAt)
         {
-            using (var unitOfWork = unitOfWorkFactory.CreateInstance())
+            try
             {
-                var rentalOrderLines = unitOfWork.RentalOrderLines.Find(rol => rol.RentalOrderId == rentalOrderId);
-                foreach (var rentalOrderLine in rentalOrderLines)
+                using (var unitOfWork = unitOfWorkFactory.CreateInstance())
                 {
-                    rentalOrderLine.ReturnedAt = returnedAt;
-                }
+                    var rentalOrderLines = unitOfWork.RentalOrderLines.Find(rol => rol.RentalOrderId == rentalOrderId);
+                    foreach (var rentalOrderLine in rentalOrderLines)
+                    {
+                        rentalOrderLine.ReturnedAt = returnedAt;
+                    }
 
-                var numberOfObjectsUpdated = unitOfWork.Complete();
-                return numberOfObjectsUpdated > 0;
+                    var numberOfObjectsUpdated = unitOfWork.Complete();
+                    if (numberOfObjectsUpdated > 0)
+                        return true;
+                    throw new OperationFailedException();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

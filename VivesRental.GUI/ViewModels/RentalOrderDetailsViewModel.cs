@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -15,7 +17,7 @@ namespace VivesRental.GUI.ViewModels
 {
     class RentalOrderDetailsViewModel : ViewModelBase, IViewModel
     {
-
+        private ObservableCollection<RentalOrderLine> rentalOrderLines = new ObservableCollection<RentalOrderLine>();
         private RentalOrder rentalOrder;
         private bool _isLoading;
         private readonly RentalOrderService service = new RentalOrderService();
@@ -25,13 +27,9 @@ namespace VivesRental.GUI.ViewModels
 
         public RentalOrderDetailsViewModel(RentalOrder rentalOrder)
         {
-            IsLoading = true;
             InstantiateCommands();
             RentalOrder = rentalOrder;
-            Task.Run(() => {
-                RentalOrder.RentalOrderLines = rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id);
-                IsLoading = false;
-            });
+            GetRentalOrderLines();
         }
 
         public RentalOrder RentalOrder
@@ -40,6 +38,15 @@ namespace VivesRental.GUI.ViewModels
             private set
             {
                 rentalOrder = value;
+                RaisePropertyChanged();
+            }
+        }
+        public ObservableCollection<RentalOrderLine> RentalOrderLines
+        {
+            get => rentalOrderLines;
+            private set
+            {
+                rentalOrderLines = value;
                 RaisePropertyChanged();
             }
         }
@@ -58,6 +65,15 @@ namespace VivesRental.GUI.ViewModels
             ReturnRentalOrderLineCommand = new RelayCommand<RentalOrderLine>(ReturnRentalOrderLine);
         }
 
+        private void GetRentalOrderLines()
+        {
+            IsLoading = true;
+            Task.Run(() => {
+                RentalOrderLines = new ObservableCollection<RentalOrderLine>(rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id));
+                IsLoading = false;
+            });
+        }
+
         private void ReturnRentalOrder()
         {
             IsLoading = true;
@@ -65,13 +81,16 @@ namespace VivesRental.GUI.ViewModels
             {
                 //TODO when returning rental item status should be set to normal
                 var returned = service.Return(RentalOrder.Id, DateTime.Now);
+                IsLoading = false;
                 if (!returned)
                 {
-                    Debug.WriteLine("Whoops, something went wrong");
+                    MessageBox.Show("Oops, something went wrong, try again later.", "Rental order details");
+                    return;
                 }
-                else Debug.WriteLine("returned");
 
-                IsLoading = false;
+                GetRentalOrderLines();
+
+
             });
         }
 
@@ -80,14 +99,18 @@ namespace VivesRental.GUI.ViewModels
             IsLoading = true;
             Task.Run(() =>
             {
+                // TODO Fix row has to be selected otherwise rentalOrderLine is null on button click
                 var returned = rentalOrderLinesService.Return(rentalOrderLine.Id, DateTime.Now);
+                IsLoading = false;
                 if (!returned)
                 {
-                    Debug.WriteLine("Whoops, something went wrong");
+                    MessageBox.Show("Oops, something went wrong, try again later.", "Rental order details");
+                    return;
                 }
-                else Debug.WriteLine("returned");
 
-                IsLoading = false;
+                GetRentalOrderLines();
+
+
             });
 
         }

@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using VivesRental.Model;
+using VivesRental.Repository.Exceptions;
 
 namespace VivesRental.Repository.Core
 {
@@ -14,7 +15,7 @@ namespace VivesRental.Repository.Core
 
         public VivesRentalDbContext(string connectionString) : base(connectionString)
         {
-
+            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

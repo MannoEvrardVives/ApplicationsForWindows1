@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -69,20 +70,19 @@ namespace VivesRental.GUI.ViewModels
                 if (createdItem == null)
                 {
                     IsLoading = false;
-                    Debug.WriteLine("Whoops, something went wrong");
+                    MessageBox.Show("Oops, something went wrong, try again later.", "Add new item");
+                    return;
                 }
-                else
+
+                var rentalItemService = new RentalItemService();
+
+                for (var i = 0; i < numberOfRentalItems; i++)
                 {
-                    var rentalItemService = new RentalItemService();
-
-                    for (var i = 0; i < numberOfRentalItems; i++)
-                    {
-                        rentalItemService.Create(new Model.RentalItem(createdItem));
-                    }
-
-                    IsLoading = false;
-                    NavigationService.OpenView(new ItemsManagementViewModel());
+                    rentalItemService.Create(new Model.RentalItem(createdItem));
                 }
+
+                IsLoading = false;
+                NavigationService.OpenView(new ItemsManagementViewModel());
             });
 
             

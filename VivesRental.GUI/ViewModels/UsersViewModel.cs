@@ -56,14 +56,21 @@ namespace VivesRental.GUI.ViewModels
             var service = new UserService();
             Task.Run(() =>
             {
-                Users = new ObservableCollection<User>(service.All());
-                IsLoading = false;
+                try
+                {
+                    Users = new ObservableCollection<User>(service.All());
+                    IsLoading = false;
+                }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                } 
             });
         }
 
         private void InstantiateCommands()
         {
-            ViewUserCommand = new RelayCommand<Model.User>(OpenUserView);
+            ViewUserCommand = new RelayCommand<User>(OpenUserView);
         }
 
         private void OpenUserView(User user)
