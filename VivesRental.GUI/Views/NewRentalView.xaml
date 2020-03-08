@@ -47,7 +47,17 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Margin="10" />
+            <Grid Grid.Row="1" Grid.Column="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0">User id:</Label>
+                <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalContentAlignment="Center" />
+            </Grid>
             <Button Template="{StaticResource RoundedButtonTemplate}" Content="Save rental order" Command="{Binding AddRentalOrderCommand}" Grid.Row="1" Grid.Column="1" Margin="10" />
         </Grid>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
