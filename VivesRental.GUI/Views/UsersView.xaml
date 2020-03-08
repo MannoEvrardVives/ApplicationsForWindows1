@@ -22,12 +22,12 @@
                     <GridViewColumn Header="Firstname" DisplayMemberBinding="{Binding FirstName}"></GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"></GridViewColumn>
-                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Phone}"></GridViewColumn>
+                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding PhoneNumber}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Loading...</TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50">Loading...</TextBlock>
         </Grid>
     </Grid>
     

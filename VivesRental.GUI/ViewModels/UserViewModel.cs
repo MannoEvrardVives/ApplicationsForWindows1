@@ -16,7 +16,7 @@ namespace VivesRental.GUI.ViewModels
 {
     class UserViewModel : ViewModelBase, IViewModel
     {
-        private User user = new User();
+        private User user;
         private readonly bool edit = false;
         private bool _isLoading;
         public ICommand CreateUserCommand { get; private set; }
@@ -41,7 +41,7 @@ namespace VivesRental.GUI.ViewModels
         public UserViewModel()
         {
             InstantiateCommands();
-            
+            User = new User();
         }
 
         public UserViewModel(User user)

@@ -30,7 +30,7 @@
             <Button Template="{StaticResource RoundedButtonTemplate}" Content="Save" Command="{Binding CreateUserCommand}"  Grid.Row="4" Margin="0, 10"/>
         </Grid>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Loading...</TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50">Loading...</TextBlock>
         </Grid>
     </Grid>
     

@@ -48,9 +48,17 @@ namespace VivesRental.GUI.ViewModels
             InstantiateCommands();
             Task.Run(() =>
             {
-                var service = new RentalOrderService();
-                RentalOrders = new ObservableCollection<RentalOrder>(service.All());
-                IsLoading = false;
+                try
+                {
+                    var service = new RentalOrderService();
+                    RentalOrders = new ObservableCollection<RentalOrder>(service.All());
+                    IsLoading = false;
+                }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
+                
             });
 
 

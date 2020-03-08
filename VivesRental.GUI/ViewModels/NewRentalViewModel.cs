@@ -79,14 +79,23 @@ namespace VivesRental.GUI.ViewModels
             };
             Task.Run(() =>
             {
-                Items = new ObservableCollection<Item>(service.All(include));
-                foreach (var item in Items)
+                try
                 {
-                    item.RentalItems = item.RentalItems
-                        .Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList();
+                    Items = new ObservableCollection<Item>(service.All(include));
+                    foreach (var item in Items)
+                    {
+                        item.RentalItems = item.RentalItems
+                            .Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList();
+                    }
+                    IsLoading = false;
                 }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
+                
 
-                IsLoading = false;
+                
             });
 
         }
@@ -126,8 +135,8 @@ namespace VivesRental.GUI.ViewModels
                         };
 
                         updateItem.RentalItems.Add(chosenItem.RentalItems.First());
-                        rentedItems.Remove(item);
-                        rentedItems.Add(updateItem);
+                        var index = rentedItems.IndexOf(item);
+                        rentedItems[index] = updateItem;
 
                         UpdateItemsOnSelection(chosenItem, 0);
 
@@ -171,9 +180,8 @@ namespace VivesRental.GUI.ViewModels
                 RentalExpiresAfterDays = chosenItem.RentalExpiresAfterDays,
                 RentalItems = chosenItem.RentalItems.Where(rentalItem => rentalItem.Status == RentalItemStatus.Normal).ToList()
             };
-
-            items.Remove(chosenItem);
-            items.Add(updateChosenItem);
+            var itemIndex = items.IndexOf(chosenItem);
+            items[itemIndex] = updateChosenItem;
         }
 
 
@@ -210,13 +218,6 @@ namespace VivesRental.GUI.ViewModels
                             rentalItemService.Edit(rentalItem);
                         }
 
-                    }
-                    foreach (var item in Items)
-                    {
-                        foreach (var rentalItem in item.RentalItems)
-                        {
-                            rentalItemService.Edit(rentalItem);
-                        }
                     }
 
                     IsLoading = false;

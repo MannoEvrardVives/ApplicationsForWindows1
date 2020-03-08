@@ -84,11 +84,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Contracts\IViewModel.cs" />
+    <Compile Include="Converters\RentalItemStatusConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Messages\NavigationMessage.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ToastService.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\ItemDetailsViewModel.cs" />
     <Compile Include="ViewModels\ItemsManagementViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewItemViewModel.cs" />
@@ -100,6 +102,9 @@
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemDetailsView.xaml.cs">
+      <DependentUpon>ItemDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ItemsManagementView.xaml.cs">
       <DependentUpon>ItemsManagementView.xaml</DependentUpon>
@@ -135,6 +140,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

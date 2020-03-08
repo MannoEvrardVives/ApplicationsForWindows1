@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Services.Contracts;
@@ -87,6 +88,7 @@ namespace VivesRental.Services
                     if (numberOfObjectsUpdated > 0)
                     {
                         return rentalOrder;
+
                     }
                     throw new OperationFailedException();
                 }
@@ -108,6 +110,7 @@ namespace VivesRental.Services
                     foreach (var rentalOrderLine in rentalOrderLines)
                     {
                         rentalOrderLine.ReturnedAt = returnedAt;
+
                     }
 
                     var numberOfObjectsUpdated = unitOfWork.Complete();

@@ -13,7 +13,16 @@
         
 
     </Window.Resources>
-
+    <Window.InputBindings>
+        <KeyBinding Key="H" Modifiers="Control" Command="{Binding DashboardViewCommand}"/>
+        <KeyBinding Key="X" Modifiers="Control" Command="{Binding CloseCommand}"/>
+        <KeyBinding Key="U" Modifiers="Control" Command="{Binding UsersViewCommand}"/>
+        <KeyBinding Key="I" Modifiers="Control" Command="{Binding ItemsManagementViewCommand}"/>
+        <KeyBinding Key="R" Modifiers="Control" Command="{Binding RentalOrdersViewCommand}"/>
+        <KeyBinding Key="U" Modifiers="Control+Shift"  Command="{Binding UserViewCommand}"/>
+        <KeyBinding Key="I" Modifiers="Control+Shift" Command="{Binding NewItemViewCommand}"/>
+        <KeyBinding Key="R" Modifiers="Control+Shift" Command="{Binding NewRentalViewCommand}"/>
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,15 +30,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="Home" Command="{Binding DashboardViewCommand}"/>
-                <MenuItem Header="Close" Command="{Binding CloseCommand}" />
+            <MenuItem Header="App">
+                <MenuItem Header="Home" Command="{Binding DashboardViewCommand}" InputGestureText="ctrl+H"/>
+                <MenuItem Header="Close" Command="{Binding CloseCommand}" InputGestureText="ctrl+X" />
             </MenuItem>
             <MenuItem Header="Users">
-                <MenuItem Header="New" Command="{Binding UserViewCommand}"/>
+                <MenuItem Header="New" Command="{Binding UserViewCommand}" InputGestureText="ctrl+shift+U"/>
+                <MenuItem Header="All Users" Command="{Binding UsersViewCommand}" InputGestureText="ctrl+U"/>
             </MenuItem>
             <MenuItem Header="Items">
-                <MenuItem Header="New" Command="{Binding NewItemViewCommand}"/>
+                <MenuItem Header="New" Command="{Binding NewItemViewCommand}" InputGestureText="ctrl+shift+I"/>
+                <MenuItem Header="All Items" Command="{Binding ItemsManagementViewCommand}" InputGestureText="ctrl+I"/>
+            </MenuItem>
+            <MenuItem Header="Rental Orders">
+                <MenuItem Header="New" Command="{Binding NewRentalViewCommand}" InputGestureText="ctrl+shift+R"/>
+                <MenuItem Header="All Orders" Command="{Binding RentalOrdersViewCommand}" InputGestureText="ctrl+R"/>
             </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />

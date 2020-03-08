@@ -14,7 +14,7 @@ namespace VivesRental.Services.Factories
             }
             catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
 
         }

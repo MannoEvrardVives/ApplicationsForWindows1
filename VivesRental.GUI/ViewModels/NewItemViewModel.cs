@@ -64,25 +64,25 @@ namespace VivesRental.GUI.ViewModels
             IsLoading = true;
             Task.Run(() =>
             {
-                var service = new ItemService();
-                var createdItem = service.Create(Item);
+                try
+                {
+                    var service = new ItemService();
+                    var createdItem = service.Create(Item);
 
-                if (createdItem == null)
+                    var rentalItemService = new RentalItemService();
+
+                    for (var i = 0; i < numberOfRentalItems; i++)
+                    {
+                        rentalItemService.Create(new Model.RentalItem(createdItem));
+                    }
+
+                    IsLoading = false;
+                    NavigationService.OpenView(new ItemsManagementViewModel());
+                }
+                catch (Exception ex)
                 {
                     IsLoading = false;
-                    MessageBox.Show("Oops, something went wrong, try again later.", "Add new item");
-                    return;
                 }
-
-                var rentalItemService = new RentalItemService();
-
-                for (var i = 0; i < numberOfRentalItems; i++)
-                {
-                    rentalItemService.Create(new Model.RentalItem(createdItem));
-                }
-
-                IsLoading = false;
-                NavigationService.OpenView(new ItemsManagementViewModel());
             });
 
             

@@ -30,6 +30,15 @@
                 <Button Template="{StaticResource RoundedButtonTemplate}" Margin="20px 0px 0px 0px" Content="Return entire order"  Grid.Column="2"  Command="{Binding ReturnRentalOrderCommand}" Padding="10, 0"/>
             </Grid>
             <ListView Grid.Row="1" ItemsSource="{Binding RentalOrderLines}" Name="RentalOrderLinesListView">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="IsSelected" Value="True"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
@@ -50,7 +59,7 @@
             </ListView>
         </Grid>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Loading...</TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50">Loading...</TextBlock>
         </Grid>
     </Grid>
     

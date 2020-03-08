@@ -42,7 +42,7 @@
             <TextBox Template="{StaticResource TextBoxTemplate}" Text="{Binding RentalOrderId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" MaxWidth="200" />
         </Grid>
         <Grid Background="#80000000" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Loading...</TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50">Loading...</TextBlock>
         </Grid>
     </Grid>
     

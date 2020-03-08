@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
 using VivesRental.Services.Contracts;
 using VivesRental.Services.Exceptions;
 using VivesRental.Services.Factories;
@@ -107,12 +108,13 @@ namespace VivesRental.Services
 
                     if (returnedAt == DateTime.MinValue)
                     {
-                        throw new InvalidInputException();
+                        throw new RentalItemReturnedException();
+                        
                     }
 
                     if (rentalOrderLine.ReturnedAt.HasValue)
                     {
-                        throw new InvalidInputException();
+                        throw new RentalItemReturnedException();
                     }
 
                     rentalOrderLine.ReturnedAt = returnedAt;

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VivesRental.GUI.Contracts;
+using VivesRental.GUI.Services;
 using VivesRental.Model;
 using VivesRental.Repository.Includes;
 using VivesRental.Services;
@@ -19,7 +20,6 @@ namespace VivesRental.GUI.ViewModels
     {
 
         private ObservableCollection<Item> items = new ObservableCollection<Item>();
-        private string[] possibleStatusList = Enum.GetNames(typeof(RentalItemStatus));
         private bool _isLoading;
         public ICommand EditRentalItemCommand { get; private set; }
 
@@ -32,10 +32,7 @@ namespace VivesRental.GUI.ViewModels
                 RaisePropertyChanged("Items");
             }
         }
-        public string[] PossibleStatusList
-        {
-            get => possibleStatusList;
-        }
+        
         public bool IsLoading
         {
             get => _isLoading;
@@ -56,8 +53,15 @@ namespace VivesRental.GUI.ViewModels
             };
             Task.Run(() =>
             {
-                Items =  new ObservableCollection<Item>(service.All(include));
-                IsLoading = false;
+                try
+                {
+                    Items = new ObservableCollection<Item>(service.All(include));
+                    IsLoading = false;
+                }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
             });
 
 
@@ -65,12 +69,12 @@ namespace VivesRental.GUI.ViewModels
 
         private void InstantiateCommands()
         {
-            EditRentalItemCommand = new RelayCommand(EditRentalItem);
+            EditRentalItemCommand = new RelayCommand<Item>(EditRentalItem);
         }
 
-        private void EditRentalItem()
+        private void EditRentalItem(Item item)
         {
-            Debug.WriteLine("editing");
+            NavigationService.OpenView(new ItemDetailsViewModel(item));
         }
 
 

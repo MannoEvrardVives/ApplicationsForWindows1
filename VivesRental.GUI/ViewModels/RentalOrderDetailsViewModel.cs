@@ -69,8 +69,16 @@ namespace VivesRental.GUI.ViewModels
         {
             IsLoading = true;
             Task.Run(() => {
-                RentalOrderLines = new ObservableCollection<RentalOrderLine>(rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id));
-                IsLoading = false;
+                try
+                {
+                    RentalOrderLines = new ObservableCollection<RentalOrderLine>(rentalOrderLinesService.FindByRentalOrderId(RentalOrder.Id));
+                    IsLoading = false;
+                }
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
+                
             });
         }
 
@@ -79,16 +87,24 @@ namespace VivesRental.GUI.ViewModels
             IsLoading = true;
             Task.Run(() =>
             {
-                //TODO when returning rental item status should be set to normal
-                var returned = service.Return(RentalOrder.Id, DateTime.Now);
-                IsLoading = false;
-                if (!returned)
+                try
                 {
-                    MessageBox.Show("Oops, something went wrong, try again later.", "Rental order details");
-                    return;
+                    var returned = service.Return(RentalOrder.Id, DateTime.Now);
+                    var rentalItemService = new RentalItemService();
+                    foreach (var rentalOrderLine in RentalOrderLines)
+                    {
+                        var rentalItem = rentalItemService.Get((int) rentalOrderLine.RentalItemId);
+                        rentalItem.Status = RentalItemStatus.Normal;
+                        rentalItemService.Edit(rentalItem);
+                    }
+                    IsLoading = false;
+                    GetRentalOrderLines();
                 }
-
-                GetRentalOrderLines();
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
+                
 
 
             });
@@ -99,17 +115,21 @@ namespace VivesRental.GUI.ViewModels
             IsLoading = true;
             Task.Run(() =>
             {
-                // TODO Fix row has to be selected otherwise rentalOrderLine is null on button click
-                var returned = rentalOrderLinesService.Return(rentalOrderLine.Id, DateTime.Now);
-                IsLoading = false;
-                if (!returned)
+                try
                 {
-                    MessageBox.Show("Oops, something went wrong, try again later.", "Rental order details");
-                    return;
+                    // TODO Fix row has to be selected otherwise rentalOrderLine is null on button click
+                    rentalOrderLinesService.Return(rentalOrderLine.Id, DateTime.Now);
+                    var rentalItemService = new RentalItemService();
+                    var rentalItem = rentalItemService.Get((int)rentalOrderLine.RentalItemId);
+                    rentalItem.Status = RentalItemStatus.Normal;
+                    rentalItemService.Edit(rentalItem);
+                    IsLoading = false;
+                    GetRentalOrderLines();
                 }
-
-                GetRentalOrderLines();
-
+                catch (Exception ex)
+                {
+                    IsLoading = false;
+                }
 
             });
 

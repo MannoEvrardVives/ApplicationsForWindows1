@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Exceptions\OperationFailedException.cs" />
     <Compile Include="Exceptions\RentalItemNotFoundException.cs" />
+    <Compile Include="Exceptions\RentalItemReturnedException.cs" />
     <Compile Include="Exceptions\RentalOrderLineNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Extensions\ValidationExtensions.cs" />
